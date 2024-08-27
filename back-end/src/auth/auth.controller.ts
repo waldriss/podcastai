@@ -1,8 +1,16 @@
 import { Controller, Get } from '@nestjs/common';
+import { AuthService } from './auth.service';
 
-@Controller('AuthController')
+@Controller('')
 export class AuthController {
-    constructor(){}
+    constructor(private readonly authService:AuthService){}
+    @Get("/users")
+    async get(){
+        const a=await this.authService.test();
+        console.log(a);
+        return await this.authService.test();
+
+    }
 
     
 }

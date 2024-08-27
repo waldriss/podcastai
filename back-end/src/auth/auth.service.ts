@@ -1,10 +1,15 @@
 import { Injectable } from '@nestjs/common';
+import { ClerkService } from 'src/clerk/clerk.service';
 import { RegisterUserDto } from 'src/db/dto/register-user.dto';
 import { PrismaService } from 'src/db/prisma.service';
 
 @Injectable()
 export class AuthService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private readonly clerkService: ClerkService,
+  ) {}
+
   async registerUser({ email, password, name }: RegisterUserDto) {
     const userWithEmail = await this.prisma.user.findUnique({
       where: { email: email },
@@ -17,5 +22,8 @@ export class AuthService {
     });
     if (createduser) {
     }
+  }
+  async test() {
+    await this.clerkService.getUsers();
   }
 }

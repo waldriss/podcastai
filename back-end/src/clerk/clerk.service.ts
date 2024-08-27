@@ -11,5 +11,12 @@ export class ClerkService {
       secretKey: this.configService.get<string>('CLERK_SECRET_KEY'), // Access environment variable via ConfigService
     });
   }
+  async getUsers() {
+    console.log('its !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! work');
+    console.log('its !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! work');
+    console.log('its !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! work');
+    return await this.clerkClient.users.getCount();
+    
+  }
   
 }
