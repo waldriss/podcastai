@@ -27,7 +27,7 @@ const formSchema = z.object({
     message: "password confirmation must be at least 8 characters.",
   })
   
-}).refine((data) => data.password === data.password_confirmation, {
+}).refine((data) => {data.password === data.password_confirmation}, {
   message: "Passwords don't match",
   path: ["password_confirmation"],
 });
@@ -38,7 +38,9 @@ const SignupForm =  () => {
     resolver: zodResolver(formSchema),
     defaultValues: { email: "", password: "" },
   });
-  const onSubmit = () => {};
+  const onSubmit = () => {
+    console.log("ici");
+  };
   return (
     <section className="bg-black-1 w-[500px] py-8 rounded-md px-10 flex flex-col items-center justify-start ">
       <Image src={"/icons/auth-logo.svg"} alt="logo" height={180} width={180} />
@@ -83,7 +85,7 @@ const SignupForm =  () => {
                       />
                     </FormControl>
 
-                    <FormMessage />
+                    <FormMessage className="text-orange-1" />
                   </FormItem>
                 )}
               />
@@ -102,7 +104,7 @@ const SignupForm =  () => {
                       />
                     </FormControl>
 
-                    <FormMessage />
+                    <FormMessage className="text-orange-1" />
                   </FormItem>
                 )}
               />
@@ -121,7 +123,7 @@ const SignupForm =  () => {
                       />
                     </FormControl>
 
-                    <FormMessage />
+                    <FormMessage className="text-orange-1" />
                   </FormItem>
                 )}
               />

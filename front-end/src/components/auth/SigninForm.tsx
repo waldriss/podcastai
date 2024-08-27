@@ -76,7 +76,7 @@ const SigninForm = () => {
                       />
                     </FormControl>
 
-                    <FormMessage />
+                    <FormMessage className="text-orange-1" />
                   </FormItem>
                 )}
               />
@@ -95,7 +95,7 @@ const SigninForm = () => {
                       />
                     </FormControl>
 
-                    <FormMessage />
+                    <FormMessage className="text-orange-1" />
                   </FormItem>
                 )}
               />
