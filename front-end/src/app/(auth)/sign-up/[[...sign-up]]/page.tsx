@@ -1,10 +1,10 @@
-import { SignUp } from '@clerk/nextjs'
+import SignupForm from '@/components/auth/SignupForm'
 import React from 'react'
 
 const Signup = () => {
   return (
     <div className='flex-center glassmorphism-auth h-screen w-full'>
-        <SignUp/>
+        <SignupForm/>
 
     </div>
   )
