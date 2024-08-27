@@ -4,7 +4,9 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [ConfigModule.forRoot()],
+  imports: [ ConfigModule.forRoot({
+    isGlobal: true, // Make ConfigModule available globally
+  }),],
   controllers: [AppController],
   providers: [AppService],
 })
