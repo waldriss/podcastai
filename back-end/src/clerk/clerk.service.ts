@@ -1,6 +1,7 @@
 import { ClerkClient, createClerkClient } from '@clerk/clerk-sdk-node';
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { CreateUserDto } from './dto/create-user.dto';
 
 @Injectable()
 export class ClerkService {
@@ -12,11 +13,30 @@ export class ClerkService {
     });
   }
   async getUsers() {
-    console.log('its !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! work');
-    console.log('its !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! work');
-    console.log('its !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! work');
-    return await this.clerkClient.users.getCount();
-    
+    try {
+      const user = await this.clerkClient.users.getUser(
+        'user_2lHvrJK8yp2K7laBkfTHzRtuxnE',
+      );
+
+      return await this.clerkClient.users.getCount();
+    } catch (error) {
+      throw new HttpException(
+        { message: 'Error caugh' },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
-  
+
+  async createUser({ email, userId, password }: CreateUserDto) {
+    try {
+      const clerkCreatedUser = await this.clerkClient.users.createUser({
+        externalId: userId,
+        emailAddress: [email],
+        password: password,
+      });
+      return clerkCreatedUser
+    } catch (error) {
+      throw error
+    }
+  }
 }
