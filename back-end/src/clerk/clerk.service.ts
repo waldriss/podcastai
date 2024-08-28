@@ -2,6 +2,7 @@ import { ClerkClient, createClerkClient } from '@clerk/clerk-sdk-node';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class ClerkService {
@@ -12,20 +13,6 @@ export class ClerkService {
       secretKey: this.configService.get<string>('CLERK_SECRET_KEY'), // Access environment variable via ConfigService
     });
   }
-  async getUsers() {
-    try {
-      const user = await this.clerkClient.users.getUser(
-        'user_2lHvrJK8yp2K7laBkfTHzRtuxnE',
-      );
-
-      return await this.clerkClient.users.getCount();
-    } catch (error) {
-      throw new HttpException(
-        { message: 'Error caugh' },
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-  }
 
   async createUser({ email, userId, password }: CreateUserDto) {
     try {
@@ -34,9 +21,26 @@ export class ClerkService {
         emailAddress: [email],
         password: password,
       });
-      return clerkCreatedUser
+      return clerkCreatedUser;
     } catch (error) {
-      throw error
+      throw new HttpException(
+        { message: 'Error creating clerk user' },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  async updateUser({ userId, externalId }: UpdateUserDto) {
+    try {
+      const updatedUser = await this.clerkClient.users.updateUser(userId, {
+        externalId: externalId,
+      });
+      return { message: 'user created' };
+    } catch (error) {
+      throw new HttpException(
+        { message: 'Error updating clerk user' },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
 }
