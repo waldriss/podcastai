@@ -16,6 +16,8 @@ import { z } from "zod";
 import { Button } from "../ui/button";
 import { Loader } from "lucide-react";
 import Link from "next/link";
+import { useSignIn } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 const formSchema = z.object({
   email: z.string().min(1, {
     message: "please enter email.",
@@ -26,12 +28,37 @@ const formSchema = z.object({
 });
 
 const SigninForm = () => {
+  const router = useRouter();
+
+  const { signIn, setActive } = useSignIn();
   const [isLoading, setIsLoading] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: { email: "", password: "" },
   });
-  const onSubmit = () => {};
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      setIsLoading(true);
+      const signedin = await signIn?.create({
+        identifier: values.email,
+        password: values.password,
+      });
+      if (signedin) {
+        if (setActive) {
+          await setActive({ session: signedin.createdSessionId });
+        
+          router.push("/");
+        }
+      }
+    } catch (error) {
+      setIsLoading(false);
+      
+    }
+  };
+
+  const handeSubmitGoogle=async()=>{
+    const signedIn=await signIn?.authenticateWithRedirect({redirectUrl:"/ssocallback",strategy:"oauth_google",redirectUrlComplete:"/googleAuthLoader"})
+  }
   return (
     <section className="bg-black-1 w-[500px] py-8 rounded-md px-10 flex flex-col items-center justify-start ">
       <Image src={"/icons/auth-logo.svg"} alt="logo" height={180} width={180} />
