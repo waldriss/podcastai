@@ -1,4 +1,4 @@
-import { SigInOrSignUpGoogleInDB } from "@/api/requests/AuthRequests";
+import { SigInOrSignUpGoogleInDB } from "@/lib/api/requests/AuthRequests";
 import Loader from "@/components/global/Loader";
 import { currentUser } from "@clerk/nextjs/server";
 

@@ -1,4 +1,4 @@
-import { GenerateThumbnailProps } from "@/types";
+import { GenerateThumbnailProps } from "@/lib/types";
 import React, { useRef, useState } from "react";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";

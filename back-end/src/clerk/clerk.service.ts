@@ -16,6 +16,7 @@ export class ClerkService {
 
   async createUser({ email, userId, password }: CreateUserDto) {
     try {
+     
       const clerkCreatedUser = await this.clerkClient.users.createUser({
         externalId: userId,
         emailAddress: [email],
@@ -23,6 +24,7 @@ export class ClerkService {
       });
       return clerkCreatedUser;
     } catch (error) {
+    
       throw new HttpException(
         { message: 'Error creating clerk user' },
         HttpStatus.INTERNAL_SERVER_ERROR,
@@ -32,11 +34,13 @@ export class ClerkService {
 
   async updateUser({ userId, externalId }: UpdateUserDto) {
     try {
+   
       const updatedUser = await this.clerkClient.users.updateUser(userId, {
         externalId: externalId,
       });
       return { message: 'user created' };
     } catch (error) {
+     
       throw new HttpException(
         { message: 'Error updating clerk user' },
         HttpStatus.INTERNAL_SERVER_ERROR,

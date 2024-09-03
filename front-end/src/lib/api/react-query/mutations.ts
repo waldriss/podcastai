@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { registerUserInDB } from "../requests/AuthRequests";
-import { UserToRegister } from "@/types/user";
+import { UserToRegister } from "@/lib/types/user";
 
 
 

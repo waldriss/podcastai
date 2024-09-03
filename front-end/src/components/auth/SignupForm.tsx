@@ -16,13 +16,13 @@ import { z } from "zod";
 import { Button } from "../ui/button";
 import { Loader } from "lucide-react";
 import Link from "next/link";
-import { useRegisterInDB } from "@/api/react-query/mutations";
+import { useRegisterInDB } from "@/lib/api/react-query/mutations";
 const formSchema = z
   .object({
     email: z.string().min(1, {
       message: "please enter email.",
     }),
-    name:z.string(),
+    name: z.string(),
     password: z.string().min(8, {
       message: "password must be at least 8 characters.",
     }),
@@ -30,19 +30,13 @@ const formSchema = z
       message: "password confirmation must be at least 8 characters.",
     }),
   })
-  .refine(
-    (data) => {
-      data.password === data.password_confirmation;
-    },
-    {
-      message: "Passwords don't match",
-      path: ["password_confirmation"],
-    }
-  );
+  .refine((data) => data.password === data.password_confirmation, {
+    message: "Passwords don't match",
+    path: ["password_confirmation"],
+  });
 
 const SignupForm = () => {
-  const {mutateAsync:registerInDB}=useRegisterInDB()
-
+  const { mutateAsync: registerInDB } = useRegisterInDB();
 
   const [isLoading, setIsLoading] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
@@ -58,8 +52,10 @@ const SignupForm = () => {
         name: values.name,
         password: values.password,
       });
+      console.log(resp);
       setIsLoading(false);
     } catch (error) {
+      console.log(error);
       setIsLoading(false);
     }
   };
@@ -101,6 +97,25 @@ const SignupForm = () => {
                           autoCapitalize="none"
                           autoComplete="email"
                           autoCorrect="off"
+                          disabled={isLoading}
+                          {...field}
+                        />
+                      </FormControl>
+
+                      <FormMessage className="text-orange-1" />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem className="mt-3">
+                      <FormControl>
+                        <Input
+                          className="bg-transparent focus-visible:ring-1 ring-black-3 !ring-offset-black-3 text-white-1 placeholder:text-white-3 border-[#0e0f12] focus:border-black-3"
+                          placeholder="Name"
+                          type="text"
                           disabled={isLoading}
                           {...field}
                         />
