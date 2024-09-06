@@ -38,7 +38,7 @@ export const SigInOrSignUpGoogleInDB = async (
   userId: string
 ) => {
   try {
-    const res = await fetch(`${backendUrl}SigInOrSignUpGoogle`, {
+    const res = await fetch(`${backendUrl}auth-google`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -65,7 +65,7 @@ export const getAuth = async (userId: string|undefined|null,getToken:GetToken) =
     const token=await getToken();
  
     
-    const userResponse = await fetch(`${backendUrl}authenticatedUser/${userId}`, {
+    const userResponse = await fetch(`${backendUrl}auth/${userId}`, {
       cache: "default",
       headers: {
         'Content-Type': 'application/json',

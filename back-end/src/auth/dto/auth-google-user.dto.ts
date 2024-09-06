@@ -1,6 +1,6 @@
 import { IsEmail, IsNotEmpty } from 'class-validator';
 
-export class SigInOrSignUpGoogleDto {
+export class AuthWithGoogleDto {
   @IsNotEmpty()
   readonly userId: string;
   @IsNotEmpty()

@@ -1,8 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { ClerkService } from 'src/clerk/clerk.service';
 import { RegisterUserDto } from 'src/auth/dto/register-user.dto';
 import { PrismaService } from 'src/db/prisma.service';
-import { SigInOrSignUpGoogleDto } from './dto/auth-google-user.dto';
+
+import { GetAuthenticatedUserParam } from './dto/get-authenticated-user.dto';
+import { AuthWithGoogleDto } from './dto/auth-google-user.dto';
 
 @Injectable()
 export class AuthService {
@@ -34,7 +36,7 @@ export class AuthService {
       throw error;
     }
   }
-  async SigInOrSignUpGoogle({ email, name, userId }: SigInOrSignUpGoogleDto) {
+  async authWithGoogle({ email, name, userId }:AuthWithGoogleDto ) {
     try {
       const user = await this.prisma.user.findUnique({
         where: { email: email },
@@ -61,5 +63,26 @@ export class AuthService {
       throw error;
     }
   }
- 
+
+  async getAuthenticatedUser({ id }: GetAuthenticatedUserParam) {
+    try {
+      const user = await this.prisma.user.findUnique({
+        where: { id: id },
+        select: {
+          id: true,
+          name: true,
+        },
+      });
+      if (user) {
+        return user;
+      }
+
+      throw new HttpException(
+        { message: 'Error User not found' },
+        HttpStatus.NOT_FOUND,
+      );
+    } catch (error) {
+      throw error;
+    }
+  }
 }

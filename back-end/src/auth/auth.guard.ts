@@ -4,14 +4,16 @@ import {
   ExecutionContext,
   UnauthorizedException,
 } from '@nestjs/common';
-import { Request } from 'express';
+import { Request, Response } from 'express';
 
 import { ClerkExpressRequireAuth } from '@clerk/clerk-sdk-node';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
+  private readonly requireAuth = ClerkExpressRequireAuth({onError:()=>{console.log("error")}});
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest<Request>();
+    const response = context.switchToHttp().getResponse<Response>();
 
     const excludedPaths = [
       '/signin',
@@ -25,7 +27,7 @@ export class AuthGuard implements CanActivate {
     }
 
     return new Promise((resolve, reject) => {
-      ClerkExpressRequireAuth()(request, null, (err: any) => {
+      this.requireAuth(request, response, (err: any) => {
         if (err) {
           reject(new UnauthorizedException('Authentication failed'));
         }
