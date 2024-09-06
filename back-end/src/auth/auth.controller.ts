@@ -32,7 +32,7 @@ export class AuthController {
     @Param('id', ParseIntPipe) id: number,
     @AuthenticatedUserId() authId: number,
   ) {
-    console.log("hello");
+   
     if (id != authId) {
       throw new HttpException(
         { message: 'UnAuthorized' },

@@ -63,6 +63,7 @@ export const getAuth = async (userId: string|undefined|null,getToken:GetToken) =
   try {
     
     const token=await getToken();
+   
  
     
     const userResponse = await fetch(`${backendUrl}auth/${userId}`, {
@@ -75,7 +76,9 @@ export const getAuth = async (userId: string|undefined|null,getToken:GetToken) =
     });
     const userData = await userResponse.json();
    
+   
     if (userResponse.ok) {
+     
       
 
       return userData.user;

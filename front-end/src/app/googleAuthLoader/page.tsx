@@ -14,6 +14,7 @@ const page = async () => {
       const resp = await SigInOrSignUpGoogleInDB(user.emailAddresses[0].emailAddress,`${user.firstName} ${user.lastName}`,user.id);
       
     } catch (error) {
+      console.log("errrrrrrrrrrrrrrrrrrrrrrrrrr")
       console.log(error);
     }
     finally{

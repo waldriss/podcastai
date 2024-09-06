@@ -6,7 +6,5 @@ export interface UserToRegister {
 
 export interface TAuthenticatedUser {
   name: string;
-  username: string;
   id: number;
-  userImage: string;
 }

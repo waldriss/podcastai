@@ -44,6 +44,7 @@ const SigninForm = () => {
         password: values.password,
       });
       if (signedin) {
+        console.log("ici");
         if (setActive) {
           await setActive({ session: signedin.createdSessionId });
         
@@ -51,6 +52,8 @@ const SigninForm = () => {
         }
       }
     } catch (error) {
+      console.log("ici2");
+      console.log(error);
       setIsLoading(false);
       
     }
@@ -69,7 +72,7 @@ const SigninForm = () => {
       <p className="text-sm text-white-1">
         Please fill in the details to sign in to your account.
       </p>
-      <Button className="w-full border-[0.5px] flex justify-center items-center border-solid border-[#121316] my-6 rounded-md p-1">
+      <Button onClick={handeSubmitGoogle} className="w-full border-[0.5px] flex justify-center items-center border-solid border-[#121316] my-6 rounded-md p-1">
         <Image src={"/icons/google.webp"} alt="" width={30} height={30} />
       </Button>
       <div className="relative w-full">

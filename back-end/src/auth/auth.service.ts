@@ -58,6 +58,8 @@ export class AuthService {
           userId,
           externalId: createduser.id.toString(),
         });
+        
+        return { message: 'user created' };
       }
     } catch (error) {
       throw error;
@@ -74,7 +76,8 @@ export class AuthService {
         },
       });
       if (user) {
-        return user;
+        
+        return {user};
       }
 
       throw new HttpException(

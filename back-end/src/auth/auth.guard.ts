@@ -10,7 +10,11 @@ import { ClerkExpressRequireAuth } from '@clerk/clerk-sdk-node';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  private readonly requireAuth = ClerkExpressRequireAuth({onError:()=>{console.log("error")}});
+  private readonly requireAuth = ClerkExpressRequireAuth({
+    onError: () => {
+      console.log('error');
+    },
+  });
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest<Request>();
     const response = context.switchToHttp().getResponse<Response>();
@@ -18,7 +22,7 @@ export class AuthGuard implements CanActivate {
     const excludedPaths = [
       '/signin',
       '/register',
-      '/SigInOrSignUpGoogle',
+      '/auth-google',
       '/server',
     ];
 
@@ -31,7 +35,7 @@ export class AuthGuard implements CanActivate {
         if (err) {
           reject(new UnauthorizedException('Authentication failed'));
         }
-
+    
         // Extract user ID from the verified Clerk session and add it to the request
         const userId = request.auth.sessionClaims?.userId;
         if (!userId) {

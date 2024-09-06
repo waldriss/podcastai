@@ -12,16 +12,18 @@ const AuthProvider = ({
 }>) => {
   const { user } = useUser();
   const { getToken } = useAuth();
+ 
 
   const { data: authenticatedUser } = useGetAuthenticatedUser(
     undefined,
     getToken,
     user?.externalId
   ) as { data: TAuthenticatedUser };
-  console.log(authenticatedUser)
+  
   const { setauthenticatedUser } = UseAuthenticatedUser();
 
   useEffect(() => {
+    
     setauthenticatedUser(authenticatedUser);
   }, [authenticatedUser]);
   return <>{children}</>;
