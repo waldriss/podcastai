@@ -9,9 +9,28 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
   name      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  imageUrl  String?
+  podcasts  Podcast[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Podcast {
+  id            Int      @id @default(autoincrement())
+  title         String
+  description   String
+  audioUrl      String
+  imageUrl      String
+  voicePrompt   String
+  imagePrompt   String
+  voiceType     String
+  audioDuration Float
+  views         Int
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        Int
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }
