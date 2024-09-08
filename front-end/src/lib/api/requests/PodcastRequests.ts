@@ -14,7 +14,6 @@ export const generateAudio = async ({
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
-        mode: 'cors',
       },
       body: JSON.stringify({ voice, input }),
     });

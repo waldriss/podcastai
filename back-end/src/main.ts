@@ -9,7 +9,7 @@ async function bootstrap() {
     origin: 'http://localhost:3000', // Allow requests from this origin
     methods: 'GET,POST,PUT,DELETE,OPTIONS',
     credentials: true,
-    allowedHeaders: 'Content-Type', 
+     // If you need to send cookies or other credentials
   });
 
   app.useGlobalPipes(new ValidationPipe())

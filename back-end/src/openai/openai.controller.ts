@@ -10,7 +10,7 @@ export class OpenAiController {
   @Post('/generate-audio')
   async generateAudio(@Body() {voice,input}: GenerateAudioDto, @Res() res: Response) {
     try {
-      console.log("called")
+      
       const audioBuffer = await this.openAiService.generateAudio({ voice, input });
     
       res.set({
