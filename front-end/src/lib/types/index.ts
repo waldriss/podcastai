@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
+import { Voice } from "./podcast";
 
 
 declare global {
@@ -16,7 +17,7 @@ export interface PodcastCardProps {
 }
 
 export interface GeneratePodcastProps {
-  voiceType: string;
+  voiceType: Voice;
   setAudio: Dispatch<SetStateAction<string>>;
   audio: string;
   setAudioStorageId: Dispatch<SetStateAction<null>>;

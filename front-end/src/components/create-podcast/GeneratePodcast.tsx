@@ -4,11 +4,35 @@ import { Label } from "../ui/label";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 import { Loader } from "lucide-react";
+import { useGenerateAudio } from "@/lib/api/react-query/mutations";
+import { useAuth } from "@clerk/nextjs";
 
-const GeneratePodcast = (props: GeneratePodcastProps) => {
+const GeneratePodcast = ({voicePrompt,audio,setAudio,setAudioDuration,setVoicePrompt,voiceType}: GeneratePodcastProps) => {
   const [isGenerating, setIsGenerating] = useState(false);
-  const generatePodcast=()=>{
-    //here!
+  const { getToken } = useAuth();
+  const {mutateAsync:generateAudio}=useGenerateAudio(getToken)
+  const generatePodcast=async()=>{
+    if(!voicePrompt) {
+      /*
+      toast({
+        title: "Please provide a voiceType to generate a podcast",
+      })
+        */
+      return setIsGenerating(false);
+    }
+    try {
+    const arrayBuffer= await generateAudio({input:voicePrompt,voice:voiceType})
+    const blob = new Blob([arrayBuffer], { type: 'audio/mpeg' });
+    const audioUrl = URL.createObjectURL(blob);
+    console.log(audioUrl);
+    setAudio(audioUrl);
+
+    } catch (error) {
+      console.log(error);
+      // toast
+      
+    }
+   
   }
 
   return (
@@ -21,8 +45,8 @@ const GeneratePodcast = (props: GeneratePodcastProps) => {
           className="input-class font-light focus-visible:ring-offset-orange-1"
           placeholder="Provide text to generate audio"
           rows={5}
-          value={props.voicePrompt}
-          onChange={(e) => props.setVoicePrompt(e.target.value)}
+          value={voicePrompt}
+          onChange={(e) => setVoicePrompt(e.target.value)}
         />
       </div>
       <div className="mt-5 w-full max-w-[200px]">
@@ -41,14 +65,14 @@ const GeneratePodcast = (props: GeneratePodcastProps) => {
           )}
         </Button>
       </div>
-      {props.audio && (
+      {audio && (
         <audio
           controls
-          src={props.audio}
+          src={audio}
           autoPlay
           className="mt-5"
           onLoadedMetadata={(e) =>
-            props.setAudioDuration(e.currentTarget.duration)
+            setAudioDuration(e.currentTarget.duration)
           }
         />
       )}

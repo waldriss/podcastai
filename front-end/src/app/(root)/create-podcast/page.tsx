@@ -31,6 +31,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import GeneratePodcast from "@/components/create-podcast/GeneratePodcast";
 import GenerateThumbnail from "@/components/create-podcast/GenerateThumbnail";
+import { Voice } from "@/lib/types/podcast";
 const formSchema = z.object({
   podcastTitle: z.string().min(2),
   podcastDescription: z.string().min(2),
@@ -38,7 +39,7 @@ const formSchema = z.object({
 const voiceCategories = ["alloy", "shimmer", "nova", "echo", "fable", "onyx"];
 
 const CreatePodcast = () => {
-  const [voiceType, setVoiceType] = useState<string | null>(null);
+  const [voiceType, setVoiceType] = useState<Voice>("alloy");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [imagePrompt, setImagePrompt] = useState("");
   const [audioStorageId, setAudioStorageId] = useState(null);
@@ -91,7 +92,7 @@ const CreatePodcast = () => {
                 Select AI Voice
               </Label>
 
-              <Select onValueChange={(value) => setVoiceType(value)}>
+              <Select onValueChange={(value:Voice) => setVoiceType(value)}>
                 <SelectTrigger
                   className={cn(
                     "text-16 w-full border-none bg-black-1 text-gray-1 focus-visible:ring-offset-orange-1"

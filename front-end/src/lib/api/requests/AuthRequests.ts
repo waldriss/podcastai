@@ -8,7 +8,7 @@ export const registerUserInDB = async ({
   password,
 }: UserToRegister) => {
   try {
-    console.log(backendUrl);
+
 
     const res = await fetch(`${backendUrl}register`, {
       method: "POST",
