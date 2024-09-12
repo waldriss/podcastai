@@ -24,7 +24,7 @@ const GeneratePodcast = ({voicePrompt,audio,setAudio,setAudioDuration,setVoicePr
     const arrayBuffer= await generateAudio({input:voicePrompt,voice:voiceType})
     const blob = new Blob([arrayBuffer], { type: 'audio/mpeg' });
     const audioUrl = URL.createObjectURL(blob);
-    console.log(audioUrl);
+    console.log(arrayBuffer);
     setAudio(audioUrl);
 
     } catch (error) {

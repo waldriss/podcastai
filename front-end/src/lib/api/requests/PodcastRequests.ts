@@ -6,7 +6,7 @@ const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 export const generateAudio = async ({
   input,
   voice,
-}: GenerateAudioParams,getToken:GetToken): Promise<ArrayBuffer> => {
+}: GenerateAudioParams,getToken:GetToken): Promise<any> => {
   try {
     const token=await getToken();
     const res = await fetch(`${backendUrl}generate-audio`, {

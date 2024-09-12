@@ -25,6 +25,7 @@ export class AuthGuard implements CanActivate {
       '/register',
       '/auth-google',
       '/server',
+      '/generate-image'
     ];
 
     if (excludedPaths.includes(request.path)) {
