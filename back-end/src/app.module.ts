@@ -6,11 +6,12 @@ import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './auth/auth.guard';
 import { AudioAiModule } from './audioAi/audioai.module';
+import { ImageAiModule } from './imageAi/imageai.module';
 
 @Module({
   imports: [ ConfigModule.forRoot({
     isGlobal: true, // Make ConfigModule available globally
-  }),AuthModule,AudioAiModule],
+  }),AuthModule,AudioAiModule,ImageAiModule],
   controllers: [AppController],
   providers: [AppService,  {
     provide: APP_GUARD,
