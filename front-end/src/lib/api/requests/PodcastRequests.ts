@@ -31,3 +31,33 @@ export const generateAudio = async ({
     throw error;
   }
 };
+
+
+
+export const generateImage = async ({
+prompt
+}: {prompt:string},getToken:GetToken): Promise<any> => {
+  try {
+    const token=await getToken();
+    const res = await fetch(`${backendUrl}generate-image`, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({prompt }),
+    });
+
+    if (!res.ok) {
+      const error = await res.json();
+
+      throw new Error(error.message);
+    }
+    const blob = await res.blob();
+    return blob;
+  } catch (error) {
+    console.log(error);
+
+    throw error;
+  }
+};
