@@ -6,18 +6,20 @@ import { Button } from "../ui/button";
 import { Loader } from "lucide-react";
 import { useGenerateAudio } from "@/lib/api/react-query/mutations";
 import { useAuth } from "@clerk/nextjs";
+import { useToast } from "@/hooks/use-toast";
 
 const GeneratePodcast = ({voicePrompt,audio,setAudio,setAudioDuration,setVoicePrompt,voiceType}: GeneratePodcastProps) => {
   const [isGenerating, setIsGenerating] = useState(false);
   const { getToken } = useAuth();
   const {mutateAsync:generateAudio}=useGenerateAudio(getToken)
-  const generatePodcast=async()=>{
+  const { toast } = useToast()
+
+  const generatePodcast=async(e:any)=>{
+    e.preventDefault();
     if(!voicePrompt) {
-      /*
       toast({
         title: "Please provide a voiceType to generate a podcast",
       })
-        */
       return setIsGenerating(false);
     }
     try {
@@ -28,9 +30,11 @@ const GeneratePodcast = ({voicePrompt,audio,setAudio,setAudioDuration,setVoicePr
     setAudio(audioUrl);
 
     } catch (error) {
-      console.log(error);
-      // toast
-      
+      toast({
+        title: "Error creating a podcast",
+        variant: 'destructive',
+      })
+      setIsGenerating(false);
     }
    
   }
@@ -51,7 +55,7 @@ const GeneratePodcast = ({voicePrompt,audio,setAudio,setAudioDuration,setVoicePr
       </div>
       <div className="mt-5 w-full max-w-[200px]">
         <Button
-          type="submit"
+        
           className="text-16 bg-orange-1 py-4 font-bold text-white-1"
           onClick={generatePodcast}
         >

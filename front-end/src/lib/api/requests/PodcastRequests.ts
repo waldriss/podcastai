@@ -61,6 +61,7 @@ prompt
       throw new Error(error.message);
     }
     const blob = await res.blob();
+    console.log(blob);
     return blob;
   } catch (error) {
     console.log(error);

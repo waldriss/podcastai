@@ -21,9 +21,17 @@ export class ImageAiService {
     const url = `${this.cloudflareUrl}?prompt=${encodeURIComponent(prompt)}`; 
 
     try {
-      const response = await lastValueFrom(this.httpService.get(url,{timeout:20000}));
+      const response = await lastValueFrom(
+        this.httpService.get(url, { responseType: 'arraybuffer', timeout: 20000 }) // Ensure it's arraybuffer
+      );
       
-      return response.data;
+    
+      const contentType = response.headers['content-type'];
+      if (!contentType.includes('image')) {
+        throw new Error('Invalid response: Not an image');
+      }
+  
+      return Buffer.from(response.data, 'binary');
     } catch (error) {
       throw new HttpException(
         { message: `Failed to generate image: ${error.message}` },
