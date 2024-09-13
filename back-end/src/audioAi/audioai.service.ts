@@ -25,12 +25,12 @@ export class AudioAiService {
   async generateAudio({
     voice,
     input,
-  }: {
-    voice: SpeechCreateParams['voice'];
+  }: { 
+    voice: "nPczCjzI2devNBz1zQrb"|"pqHfZKP75CvOlQylNhV4"|"JBFqnCBsd6RMkjVDRZzb"|"pFZP5JQG7iQjIQuC4Bku";
     input: string;
   }) {
     try {
-      const audio = await this.elevenLabs.textToSpeech.convert("pqHfZKP75CvOlQylNhV4",{text:"hello world",model_id:"eleven_multilingual_v2"});
+      const audio = await this.elevenLabs.textToSpeech.convert(voice,{text:input,model_id:"eleven_multilingual_v2"});
       return audio;
     } catch (error) {
       throw new HttpException(

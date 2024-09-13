@@ -8,6 +8,13 @@ export const generateAudio = async ({
   voice,
 }: GenerateAudioParams,getToken:GetToken): Promise<any> => {
   try {
+    let voiceValue
+    switch(voice){
+      case "brian":voiceValue="nPczCjzI2devNBz1zQrb"
+      case "bill":voiceValue="pqHfZKP75CvOlQylNhV4"
+      case "george":voiceValue="JBFqnCBsd6RMkjVDRZzb"
+      case "lilly":voiceValue="pFZP5JQG7iQjIQuC4Bku"
+    }
     const token=await getToken();
     const res = await fetch(`${backendUrl}generate-audio`, {
       method: "POST",
@@ -15,7 +22,7 @@ export const generateAudio = async ({
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ voice, input }),
+      body: JSON.stringify({ voice:voiceValue, input }),
     });
 
     if (!res.ok) {

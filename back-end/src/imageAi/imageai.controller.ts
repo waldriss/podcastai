@@ -7,6 +7,6 @@ export class ImageAiController {
   @Get('generate-image')
   async generateImage(@Query('prompt') prompt: string) {
     const imageData = await this.imageAiService.generateImage(prompt);
-    return imageData; // Send the image back to the frontend
+    return imageData;
   }
 }

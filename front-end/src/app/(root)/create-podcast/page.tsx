@@ -36,10 +36,10 @@ const formSchema = z.object({
   podcastTitle: z.string().min(2),
   podcastDescription: z.string().min(2),
 });
-const voiceCategories = ["alloy", "shimmer", "nova", "echo", "fable", "onyx"];
+const voiceCategories = ["brian", "bill", "george", "lilly"];
 
 const CreatePodcast = () => {
-  const [voiceType, setVoiceType] = useState<Voice>("alloy");
+  const [voiceType, setVoiceType] = useState<Voice>("brian");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [imagePrompt, setImagePrompt] = useState("");
   const [audioStorageId, setAudioStorageId] = useState(null);
@@ -114,13 +114,14 @@ const CreatePodcast = () => {
                     </SelectItem>
                   ))}
                 </SelectContent>
-                {voiceType && (
+                
+                {/*voiceType && (
                   <audio
                     src={`/${voiceType}.mp3`}
                     autoPlay
                     className="hidden"
                   />
-                )}
+                )*/}
               </Select>
             </div>
 

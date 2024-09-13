@@ -1,4 +1,4 @@
-export type Voice="alloy" | "echo" | "fable" | "onyx" | "nova" | "shimmer"
+export type Voice="brian"|"bill"|"george"|"lilly"
 
 export interface GenerateAudioParams {
     voice:Voice,
