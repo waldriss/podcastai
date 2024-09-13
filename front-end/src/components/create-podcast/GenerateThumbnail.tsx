@@ -21,8 +21,39 @@ const GenerateThumbnail = ({
   const generateImage=()=>{
 
   }
-  const uploadImage=(e: React.ChangeEvent<HTMLInputElement>)=>{
+  const uploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
 
+    try {
+      const files = e.target.files;
+      if (!files) return;
+      const file = files[0];
+      const blob = await file.arrayBuffer()
+      .then((ab) => new Blob([ab]));
+
+      handleImage(blob, file.name);
+    } catch (error) {
+      console.log(error)
+     // toast({ title: 'Error uploading image', variant: 'destructive'})
+    }
+  }
+  const handleImage = async (blob: Blob, fileName: string) => {
+    setIsImageLoading(true);
+    setImage('');
+
+    try {
+   
+      const imageUrl = URL.createObjectURL(blob);
+    
+      setImage(imageUrl!);
+      setIsImageLoading(false);
+      /*toast({
+        title: "Thumbnail generated successfully",
+      })*/
+    } catch (error) {
+      console.log(error)
+      //toast({ title: 'Error generating thumbnail', variant: 'destructive'})
+    }
   }
   return (
     <>
