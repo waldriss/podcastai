@@ -1,5 +1,5 @@
 import { GetToken } from "@/lib/types";
-import { GenerateAudioParams } from "@/lib/types/podcast";
+import { GenerateAudioParams } from "@/lib/types/quote";
 
 const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 

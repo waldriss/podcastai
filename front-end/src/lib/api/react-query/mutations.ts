@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { registerUserInDB } from "../requests/AuthRequests";
 import { UserToRegister } from "@/lib/types/user";
-import { generateAudio, generateImage } from "../requests/PodcastRequests";
-import { GenerateAudioParams } from "@/lib/types/podcast";
+import { generateAudio, generateImage } from "../requests/QuoteRequests";
+import { GenerateAudioParams } from "@/lib/types/quote";
 import { GetToken } from "@/lib/types";
 
 export const useRegisterInDB = () => {

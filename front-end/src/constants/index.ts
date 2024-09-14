@@ -11,8 +11,8 @@ export const sidebarLinks = [
     },
     {
       imgURL: "/icons/microphone.svg",
-      route: "/create-podcast",
-      label: "Create Podcast",
+      route: "/create-quote",
+      label: "Create Quote",
     },
   ];
   
@@ -43,7 +43,7 @@ export const sidebarLinks = [
     },
   ];
   
-  export const podcastData = [
+  export const quoteData = [
    
     {
       id: 2,

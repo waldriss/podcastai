@@ -1,18 +1,18 @@
 
-import { PodcastCardProps } from '@/lib/types'
+import { QuoteCardProps } from '@/lib/types'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 
-const PodcastCard = ({
-  imgUrl, title, description, podcastId
-}: PodcastCardProps) => {
+const QuoteCard = ({
+  imgUrl, title, description, quoteId
+}: QuoteCardProps) => {
   const router = useRouter()
 
   const handleViews = () => {
     // increase views
 
-    router.push(`/podcasts/${podcastId}`, {
+    router.push(`/quotes/${quoteId}`, {
       scroll: true
     })
   }
@@ -36,4 +36,4 @@ const PodcastCard = ({
   )
 }
 
-export default PodcastCard
+export default QuoteCard

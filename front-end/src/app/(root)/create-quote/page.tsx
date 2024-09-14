@@ -29,16 +29,16 @@ import { Textarea } from "@/components/ui/textarea";
 import { Loader } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React from "react";
-import GeneratePodcast from "@/components/create-podcast/GeneratePodcast";
-import GenerateThumbnail from "@/components/create-podcast/GenerateThumbnail";
-import { Voice } from "@/lib/types/podcast";
+import GenerateThumbnail from "@/components/create-quote/GenerateThumbnail";
+import { Voice } from "@/lib/types/quote";
+import GenerateQuote from "@/components/create-quote/GenerateQuote";
 const formSchema = z.object({
-  podcastTitle: z.string().min(2),
-  podcastDescription: z.string().min(2),
+  quoteTitle: z.string().min(2),
+  quoteDescription: z.string().min(2),
 });
 const voiceCategories = ["brian", "bill", "george", "lilly"];
 
-const CreatePodcast = () => {
+const CreateQuote = () => {
   const [voiceType, setVoiceType] = useState<Voice>("brian");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [imagePrompt, setImagePrompt] = useState("");
@@ -52,15 +52,15 @@ const CreatePodcast = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      podcastTitle: "",
-      podcastDescription: "",
+      quoteTitle: "",
+      quoteDescription: "",
     },
   });
   const onSubmit = () => {};
 
   return (
     <section className="mt-10 flex flex-col">
-      <h1 className="text-20 font-bold text-white-1">Create Podcast</h1>
+      <h1 className="text-20 font-bold text-white-1">Create Quote</h1>
 
       <Form {...form}>
         <form
@@ -70,7 +70,7 @@ const CreatePodcast = () => {
           <div className="flex flex-col gap-[30px] border-b border-black-5 pb-10">
             <FormField
               control={form.control}
-              name="podcastTitle"
+              name="quoteTitle"
               render={({ field }) => (
                 <FormItem className="flex flex-col gap-2.5">
                   <FormLabel className="text-16 font-bold text-white-1">
@@ -79,7 +79,7 @@ const CreatePodcast = () => {
                   <FormControl>
                     <Input
                       className="input-class focus-visible:ring-offset-orange-1"
-                      placeholder="JSM Pro Podcast"
+                      placeholder="JSM Pro quote"
                       {...field}
                     />
                   </FormControl>
@@ -92,7 +92,7 @@ const CreatePodcast = () => {
                 Select AI Voice
               </Label>
 
-              <Select onValueChange={(value:Voice) => setVoiceType(value)}>
+              <Select onValueChange={(value: Voice) => setVoiceType(value)}>
                 <SelectTrigger
                   className={cn(
                     "text-16 w-full border-none bg-black-1 text-gray-1 focus-visible:ring-offset-orange-1"
@@ -114,7 +114,7 @@ const CreatePodcast = () => {
                     </SelectItem>
                   ))}
                 </SelectContent>
-                
+
                 {/*voiceType && (
                   <audio
                     src={`/${voiceType}.mp3`}
@@ -127,7 +127,7 @@ const CreatePodcast = () => {
 
             <FormField
               control={form.control}
-              name="podcastDescription"
+              name="quoteDescription"
               render={({ field }) => (
                 <FormItem className="flex flex-col gap-2.5">
                   <FormLabel className="text-16 font-bold text-white-1">
@@ -136,7 +136,7 @@ const CreatePodcast = () => {
                   <FormControl>
                     <Textarea
                       className="input-class focus-visible:ring-offset-orange-1"
-                      placeholder="Write a short podcast description"
+                      placeholder="Write a short quote description"
                       {...field}
                     />
                   </FormControl>
@@ -146,7 +146,7 @@ const CreatePodcast = () => {
             />
           </div>
           <div className="flex flex-col pt-10">
-            <GeneratePodcast
+            <GenerateQuote
               setAudioStorageId={setAudioStorageId}
               setAudio={setAudioUrl}
               voiceType={voiceType!}
@@ -174,7 +174,7 @@ const CreatePodcast = () => {
                     <Loader size={20} className="animate-spin ml-2" />
                   </>
                 ) : (
-                  "Submit & Publish Podcast"
+                  "Submit & Publish Quote"
                 )}
               </Button>
             </div>
@@ -185,4 +185,4 @@ const CreatePodcast = () => {
   );
 };
 
-export default CreatePodcast;
+export default CreateQuote;

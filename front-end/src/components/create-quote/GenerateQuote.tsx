@@ -1,4 +1,4 @@
-import { GeneratePodcastProps } from "@/lib/types";
+
 import React, { useState } from "react";
 import { Label } from "../ui/label";
 import { Textarea } from "../ui/textarea";
@@ -7,18 +7,19 @@ import { Loader } from "lucide-react";
 import { useGenerateAudio } from "@/lib/api/react-query/mutations";
 import { useAuth } from "@clerk/nextjs";
 import { useToast } from "@/hooks/use-toast";
+import { GenerateQuoteProps } from "@/lib/types";
 
-const GeneratePodcast = ({voicePrompt,audio,setAudio,setAudioDuration,setVoicePrompt,voiceType}: GeneratePodcastProps) => {
+const GenerateQuote = ({voicePrompt,audio,setAudio,setAudioDuration,setVoicePrompt,voiceType}: GenerateQuoteProps) => {
   const [isGenerating, setIsGenerating] = useState(false);
   const { getToken } = useAuth();
   const {mutateAsync:generateAudio}=useGenerateAudio(getToken)
   const { toast } = useToast()
 
-  const generatePodcast=async(e:any)=>{
+  const generateQuote=async(e:any)=>{
     e.preventDefault();
     if(!voicePrompt) {
       toast({
-        title: "Please provide a voiceType to generate a podcast",
+        title: "Please provide a voiceType to generate a quote",
       })
       return setIsGenerating(false);
     }
@@ -31,7 +32,7 @@ const GeneratePodcast = ({voicePrompt,audio,setAudio,setAudioDuration,setVoicePr
 
     } catch (error) {
       toast({
-        title: "Error creating a podcast",
+        title: "Error creating a quote",
         variant: 'destructive',
       })
       setIsGenerating(false);
@@ -43,7 +44,7 @@ const GeneratePodcast = ({voicePrompt,audio,setAudio,setAudioDuration,setVoicePr
     <div>
       <div className="flex flex-col gap-2.5">
         <Label className="text-16 font-bold text-white-1">
-          AI Prompt to generate Podcast
+          AI Prompt to generate Quote
         </Label>
         <Textarea
           className="input-class font-light focus-visible:ring-offset-orange-1"
@@ -57,7 +58,7 @@ const GeneratePodcast = ({voicePrompt,audio,setAudio,setAudioDuration,setVoicePr
         <Button
         
           className="text-16 bg-orange-1 py-4 font-bold text-white-1"
-          onClick={generatePodcast}
+          onClick={generateQuote}
         >
           {isGenerating ? (
             <>
@@ -84,4 +85,4 @@ const GeneratePodcast = ({voicePrompt,audio,setAudio,setAudioDuration,setVoicePr
   );
 };
 
-export default GeneratePodcast;
+export default GenerateQuote;

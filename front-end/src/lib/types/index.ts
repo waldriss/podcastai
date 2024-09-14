@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { Voice } from "./podcast";
+import { Voice } from "./quote";
 
 
 declare global {
@@ -9,14 +9,14 @@ declare global {
 }
 
 
-export interface PodcastCardProps {
+export interface QuoteCardProps {
   imgUrl: string;
   title: string;
   description: string;
-  podcastId: number;
+  quoteId: number;
 }
 
-export interface GeneratePodcastProps {
+export interface GenerateQuoteProps {
   voiceType: Voice;
   setAudio: Dispatch<SetStateAction<string>>;
   audio: string;

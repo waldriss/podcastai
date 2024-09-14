@@ -6,8 +6,8 @@ import Providers from "@/components/root/Providers";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Podcastai",
-  description: "Generate your podcast using AI",
+  title: "Quoteai",
+  description: "Generate your quote using AI",
   icons: {
     icon: "/icons/logo.svg",
   },

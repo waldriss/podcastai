@@ -13,12 +13,12 @@ model User {
   email     String    @unique
   name      String
   imageUrl  String?
-  podcasts  Podcast[]
+  quotes  Quote[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }
 
-model Podcast {
+model Quote {
   id            Int      @id @default(autoincrement())
   title         String
   description   String
