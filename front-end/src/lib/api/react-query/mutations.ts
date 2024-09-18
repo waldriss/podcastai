@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { registerUserInDB } from "../requests/AuthRequests";
 import { UserToRegister } from "@/lib/types/user";
-import { generateAudio, generateImage } from "../requests/QuoteRequests";
-import { GenerateAudioParams } from "@/lib/types/quote";
+import { createQuote, generateAudio, generateImage } from "../requests/QuoteRequests";
+import { CreateQuoteParams, GenerateAudioParams } from "@/lib/types/quote";
 import { GetToken } from "@/lib/types";
 
 export const useRegisterInDB = () => {
@@ -31,3 +31,13 @@ export const useGenerateImage = (getToken:GetToken) => {
     onSuccess: (data ) => {},
   });
 };
+
+export const useCreateQuote = (getToken:GetToken) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (createQuoteParams:CreateQuoteParams) =>
+      createQuote(createQuoteParams,getToken),
+    onSuccess: (data ) => {},
+  });
+};
+

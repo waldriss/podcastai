@@ -5,3 +5,15 @@ export interface GenerateAudioParams {
     input:string
 
 }
+
+export interface CreateQuoteParams{
+    quoteTitle:string,
+    quoteDescription: string,
+    audioUrl:string,
+    imageUrl:string,
+    voiceType:Voice,
+    imagePrompt:string,
+    voicePrompt:string,
+    views: number,
+    audioDuration:number
+}

@@ -32,6 +32,7 @@ import React from "react";
 import GenerateThumbnail from "@/components/create-quote/GenerateThumbnail";
 import { Voice } from "@/lib/types/quote";
 import GenerateQuote from "@/components/create-quote/GenerateQuote";
+import { useToast } from "@/hooks/use-toast";
 const formSchema = z.object({
   quoteTitle: z.string().min(2),
   quoteDescription: z.string().min(2),
@@ -56,7 +57,33 @@ const CreateQuote = () => {
       quoteDescription: "",
     },
   });
-  const onSubmit = () => {};
+  const { toast } = useToast()
+  const router = useRouter()
+  const onSubmit = () => {
+  
+    try {
+      setIsSubmitting(true);
+      if(!audioUrl || !imageUrl || !voiceType) {
+        toast({
+          title: 'Please generate audio and image',
+        })
+        setIsSubmitting(false);
+        throw new Error('Please generate audio and image')
+      }
+
+      //createquote
+      toast({ title: 'Quote created' })
+      setIsSubmitting(false);
+      router.push('/')
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: 'Error',
+        variant: 'destructive',
+      })
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <section className="mt-10 flex flex-col">
