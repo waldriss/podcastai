@@ -33,6 +33,8 @@ import GenerateThumbnail from "@/components/create-quote/GenerateThumbnail";
 import { Voice } from "@/lib/types/quote";
 import GenerateQuote from "@/components/create-quote/GenerateQuote";
 import { useToast } from "@/hooks/use-toast";
+import { useCreateQuote } from "@/lib/api/react-query/mutations";
+import { useAuth } from "@clerk/nextjs";
 const formSchema = z.object({
   quoteTitle: z.string().min(2),
   quoteDescription: z.string().min(2),
@@ -43,13 +45,12 @@ const CreateQuote = () => {
   const [voiceType, setVoiceType] = useState<Voice>("brian");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [imagePrompt, setImagePrompt] = useState("");
-  const [audioStorageId, setAudioStorageId] = useState(null);
-  const [imageStorageId, setImageStorageId] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
   const [audioUrl, setAudioUrl] = useState("");
   const [audioDuration, setAudioDuration] = useState(0);
   const [voicePrompt, setVoicePrompt] = useState("");
-
+  const { getToken } = useAuth();
+  const { mutateAsync: createQuote } = useCreateQuote(getToken);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -57,30 +58,51 @@ const CreateQuote = () => {
       quoteDescription: "",
     },
   });
-  const { toast } = useToast()
-  const router = useRouter()
-  const onSubmit = () => {
-  
+  const { toast } = useToast();
+  const router = useRouter();
+
+  const onSubmit = async ({
+    quoteDescription,
+    quoteTitle,
+  }: z.infer<typeof formSchema>) => {
     try {
       setIsSubmitting(true);
-      if(!audioUrl || !imageUrl || !voiceType) {
+      if (
+        !audioUrl ||
+        !imageUrl ||
+        !voiceType ||
+        audioDuration == 0 ||
+        imagePrompt == "" ||
+        voicePrompt == ""
+      ) {
         toast({
-          title: 'Please generate audio and image',
-        })
+          title: "Please generate audio and image",
+        });
         setIsSubmitting(false);
-        throw new Error('Please generate audio and image')
+        throw new Error("Please generate audio and image");
       }
+      const res=await createQuote({
+        audioDuration,
+        quoteTitle,
+        quoteDescription,
+        imagePrompt,
+        imageUrl,
+        audioUrl,
+        voicePrompt,
+        views: 0,
+        voiceType,
+      });
 
       //createquote
-      toast({ title: 'Quote created' })
+      toast({ title: "Quote created" });
       setIsSubmitting(false);
-      router.push('/')
+      //router.push('/')
     } catch (error) {
       console.log(error);
       toast({
-        title: 'Error',
-        variant: 'destructive',
-      })
+        title: "Error",
+        variant: "destructive",
+      });
       setIsSubmitting(false);
     }
   };
@@ -174,7 +196,6 @@ const CreateQuote = () => {
           </div>
           <div className="flex flex-col pt-10">
             <GenerateQuote
-              setAudioStorageId={setAudioStorageId}
               setAudio={setAudioUrl}
               voiceType={voiceType!}
               audio={audioUrl}
@@ -185,7 +206,6 @@ const CreateQuote = () => {
 
             <GenerateThumbnail
               setImage={setImageUrl}
-              setImageStorageId={setImageStorageId}
               image={imageUrl}
               imagePrompt={imagePrompt}
               setImagePrompt={setImagePrompt}

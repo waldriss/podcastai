@@ -20,7 +20,6 @@ export interface GenerateQuoteProps {
   voiceType: Voice;
   setAudio: Dispatch<SetStateAction<string>>;
   audio: string;
-  setAudioStorageId: Dispatch<SetStateAction<null>>;
   voicePrompt: string;
   setVoicePrompt: Dispatch<SetStateAction<string>>;
   setAudioDuration: Dispatch<SetStateAction<number>>;
@@ -28,7 +27,6 @@ export interface GenerateQuoteProps {
 
 export interface GenerateThumbnailProps {
   setImage: Dispatch<SetStateAction<string>>;
-  setImageStorageId: Dispatch<SetStateAction<null>>;
   image: string;
   imagePrompt: string;
   setImagePrompt: Dispatch<SetStateAction<string>>;

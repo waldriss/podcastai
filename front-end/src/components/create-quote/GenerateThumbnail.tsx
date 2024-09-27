@@ -13,7 +13,6 @@ import { useToast } from "@/hooks/use-toast";
 
 const GenerateThumbnail = ({
   setImage,
-  setImageStorageId,
   image,
   imagePrompt,
   setImagePrompt,

@@ -95,7 +95,6 @@ export const createQuote = async (
     const res = await fetch(`${backendUrl}create-quote`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
       body:formData,
@@ -107,6 +106,7 @@ export const createQuote = async (
       throw new Error(error.message);
     }
     const data = await res.json();
+    console.log(data);
     
     return data;
   } catch (error) {

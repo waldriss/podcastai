@@ -15,8 +15,11 @@ export class CloudinaryService {
 
   async uploadImage(file: Express.Multer.File): Promise<string> {
     try {
-        const uniqueName = `${uuidv4()}${path.extname(file.originalname)}`;
-        const result = await cloudinary.uploader.upload(file.path, {
+        const uniqueName = `${uuidv4()}`;
+        const imageFormat = file.mimetype.split("/")[1] || "jpeg";
+        const base64Image = `data:image/${imageFormat};base64,${file.buffer.toString("base64")}`;
+
+        const result = await cloudinary.uploader.upload(base64Image, {
           public_id: uniqueName,
           folder: 'quotes/thumbnails',
           format: 'webp',
@@ -34,8 +37,11 @@ export class CloudinaryService {
 
   async uploadAudio(file: Express.Multer.File): Promise<string> {
     try {
-        const uniqueName = `${uuidv4()}${path.extname(file.originalname)}`;
-        const result = await cloudinary.uploader.upload(file.path, {
+        const uniqueName = `${uuidv4()}`;
+        const audioFormat = file.mimetype.split("/")[1] || "mp3";
+        const base64Audio = `data:audio/${audioFormat};base64,${file.buffer.toString("base64")}`;
+
+        const result = await cloudinary.uploader.upload(base64Audio, {
           public_id: uniqueName,
           resource_type: 'video', // Audio is treated as video in Cloudinary
           folder: 'quotes/audios', // Optional: specify a folder in Cloudinary

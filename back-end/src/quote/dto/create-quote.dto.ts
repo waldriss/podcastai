@@ -28,6 +28,5 @@ export class CreateQuoteParamsDto{
     @Type(() => Number)
     @IsNumber()
     audioDuration:number;
-    audioFile:Express.Multer.File
-    imageFile:Express.Multer.File
+
 }
