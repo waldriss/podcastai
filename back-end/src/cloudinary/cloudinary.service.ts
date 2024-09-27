@@ -18,7 +18,7 @@ export class CloudinaryService {
         const uniqueName = `${uuidv4()}${path.extname(file.originalname)}`;
         const result = await cloudinary.uploader.upload(file.path, {
           public_id: uniqueName,
-          folder: 'quotes',
+          folder: 'quotes/thumbnails',
           format: 'webp',
         });
         return result.secure_url;
@@ -38,7 +38,7 @@ export class CloudinaryService {
         const result = await cloudinary.uploader.upload(file.path, {
           public_id: uniqueName,
           resource_type: 'video', // Audio is treated as video in Cloudinary
-          folder: 'quotes', // Optional: specify a folder in Cloudinary
+          folder: 'quotes/audios', // Optional: specify a folder in Cloudinary
         });
         return result.secure_url; 
         

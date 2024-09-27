@@ -3,6 +3,7 @@ import { QuoteController } from './quote.controller';
 import { QuoteService } from './quote.service';
 import { MulterModule } from '@nestjs/platform-express';
 import * as multer from 'multer';
+import { CloudinaryModule } from 'src/cloudinary/cloudinary.module';
 
 
 @Module({
@@ -10,6 +11,7 @@ import * as multer from 'multer';
         MulterModule.register({
             storage: multer.memoryStorage(), // Use memory storage to keep files in memory as buffer
           }),
+          CloudinaryModule
     ],
     controllers: [QuoteController],
     providers: [QuoteService],

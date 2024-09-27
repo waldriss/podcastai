@@ -6,7 +6,7 @@ import { CreateQuoteParams } from './types/quote.type';
 export class QuoteService {
     constructor() {}
     createQuote(createQuoteParams:CreateQuoteParams){
-        
+        return "i work"
 
 
     }
