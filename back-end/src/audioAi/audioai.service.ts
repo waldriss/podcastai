@@ -34,7 +34,7 @@ export class AudioAiService {
       return audio;
     } catch (error) {
       throw new HttpException(
-        { message: 'error generating Aduio' },
+        { message: 'error generating Audio' },
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
