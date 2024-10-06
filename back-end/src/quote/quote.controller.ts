@@ -2,6 +2,8 @@ import {
   Body,
   Controller,
   Get,
+  Param,
+  ParseIntPipe,
   Post,
   UploadedFiles,
   UseInterceptors,
@@ -31,6 +33,11 @@ export class QuoteController {
   @Get('trending-quotes')
   async getTrendingQuotes(){
     return this.quoteService.getTrendingQuotes();
+
+  }
+  @Get('/quotes/:id')
+  async getQuoteById(@Param('id', ParseIntPipe) id: number){
+    return this.quoteService.getQuoteById(id);
 
   }
 }

@@ -51,26 +51,47 @@ export class QuoteService {
       );
     }
   }
-  async getTrendingQuotes(){
+  async getTrendingQuotes() {
     try {
-      const quotes=await this.prisma.quote.findMany({
-        select:{
-          id:true,
-          description:true,
-          title:true,
-          imageUrl:true
-        }
-        ,
-        take:20
-      })
-      return {quotes}
+      const quotes = await this.prisma.quote.findMany({
+        select: {
+          id: true,
+          description: true,
+          title: true,
+          imageUrl: true,
+        },
+        take: 20,
+      });
+      return { quotes };
     } catch (error) {
       throw new HttpException(
         { message: `Error getting trending quotes:${error.message}` },
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
-      
     }
-     
+  }
+  async getQuoteById(id: number) {
+    try {
+      const quote = this.prisma.quote.findUnique({
+        where: {
+          id: id,
+        },
+        include:{
+          user:{
+            select:{
+              id:true,
+              name:true,
+              imageUrl:true
+            }
+          }
+        }
+      });
+      return {quote}
+    } catch (error) {
+      throw new HttpException(
+        { message: `Error getting quote by id:${error.message}` },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 }

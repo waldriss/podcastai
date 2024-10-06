@@ -2,6 +2,7 @@ import { GetToken } from "@/lib/types";
 import {
   CreateQuoteParams,
   GenerateAudioParams,
+  Quote,
   TrendingQuote,
 } from "@/lib/types/quote";
 
@@ -149,7 +150,7 @@ export const getTrendingQuotes = async (
     if (!quotesResponse.ok) {
       return [];
     }
-    const quotesData = await quotesResponse.json();
+    const quotesData: { quotes: TrendingQuote[] } = await quotesResponse.json();
 
     return quotesData?.quotes ? quotesData.quotes : [];
   } catch (error) {
@@ -171,9 +172,49 @@ export const getServerTrendingQuotes = async (
     if (!quotesResponse.ok) {
       return [];
     }
-    const quotesData = await quotesResponse.json();
+    const quotesData: { quotes: TrendingQuote[] } = await quotesResponse.json();
 
     return quotesData?.quotes ? quotesData.quotes : [];
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getQuoteById = async (id:string,getToken: GetToken): Promise<Quote> => {
+  try {
+    const token = await getToken();
+
+    const quoteResponse = await fetch(`${backendUrl}quotes/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!quoteResponse.ok) {
+      throw new Error("Quote not found");
+    }
+    const quoteData: { quote: Quote } = await quoteResponse.json();
+    return quoteData.quote;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getServerQuoteById = async (id:string,token: string): Promise<Quote> => {
+  try {
+    const quoteResponse = await fetch(`${backendUrl}quotes/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!quoteResponse.ok) {
+      throw new Error("Quote not found");
+    }
+    const quoteData: { quote: Quote } = await quoteResponse.json();
+    return quoteData.quote;
   } catch (error) {
     throw error;
   }
