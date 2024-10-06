@@ -5,7 +5,7 @@ import { QUERY_KEYS } from "./queryKeys";
 import { TAuthenticatedUser } from "@/lib/types/user";
 import { getAuth } from "../requests/AuthRequests";
 import { GetToken } from "@/lib/types";
-import { Quote, TrendingQuote, Voice } from "@/lib/types/quote";
+import { Quote, SimilarVoiceQuote, TrendingQuote, Voice } from "@/lib/types/quote";
 import { getQuoteById, getQuotesByVoice, getTrendingQuotes } from "../requests/QuoteRequests";
 export const useGetAuthenticatedUser = (initialUser:TAuthenticatedUser|undefined,getToken:GetToken,userId?:string|null) => {
     return useQuery({
@@ -42,7 +42,7 @@ export const useGetAuthenticatedUser = (initialUser:TAuthenticatedUser|undefined
   };
 
 
-  export const useGetQuotesByVoice = (initialQuotes:TrendingQuote[]|undefined,getToken:GetToken,voice:Voice) => {
+  export const useGetQuotesByVoice = (initialQuotes:SimilarVoiceQuote[]|undefined,getToken:GetToken,voice:Voice) => {
     return useQuery({
       queryKey: [QUERY_KEYS.GET_TRENDING_QUOTES],
       queryFn: () => getQuotesByVoice(voice, getToken),
