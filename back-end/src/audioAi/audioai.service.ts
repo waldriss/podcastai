@@ -30,6 +30,7 @@ export class AudioAiService {
     input: string;
   }) {
     try {
+      
       const audio = await this.elevenLabs.textToSpeech.convert(voice,{text:input,model_id:"eleven_multilingual_v2"});
       return audio;
     } catch (error) {

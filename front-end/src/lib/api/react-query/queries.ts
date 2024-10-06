@@ -7,7 +7,7 @@ import { getAuth } from "../requests/AuthRequests";
 import { GetToken } from "@/lib/types";
 export const useGetAuthenticatedUser = (initialUser:TAuthenticatedUser|undefined,getToken:GetToken,userId?:string|null) => {
     return useQuery({
-      queryKey: [QUERY_KEYS.GET_AUTHENTICATED_USER,userId],
+      queryKey: [QUERY_KEYS.GET_AUTHENTICATED_USER,userId,getToken],
       queryFn: () => getAuth( userId,getToken),
       initialData: initialUser,
       refetchOnWindowFocus: false,

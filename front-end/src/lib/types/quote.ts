@@ -1,4 +1,4 @@
-export type Voice="brian"|"bill"|"george"|"lilly"
+export type Voice="Brian"|"Bill"|"George"|"Lilly"
 
 export interface GenerateAudioParams {
     voice:Voice,

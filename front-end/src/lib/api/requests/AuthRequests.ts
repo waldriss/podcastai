@@ -8,8 +8,6 @@ export const registerUserInDB = async ({
   password,
 }: UserToRegister) => {
   try {
-
-
     const res = await fetch(`${backendUrl}register`, {
       method: "POST",
       headers: {
@@ -58,29 +56,24 @@ export const SigInOrSignUpGoogleInDB = async (
   }
 };
 
-
-export const getAuth = async (userId: string|undefined|null,getToken:GetToken) => {
+export const getAuth = async (
+  userId: string | undefined | null,
+  getToken: GetToken
+) => {
   try {
-    
-    const token=await getToken();
-   
- 
-    
+    const token = await getToken();
+
     const userResponse = await fetch(`${backendUrl}auth/${userId}`, {
-      cache: "default",
+      cache: "no-cache",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
-        mode: 'cors',
+        mode: "cors",
       },
     });
     const userData = await userResponse.json();
-   
-   
-    if (userResponse.ok) {
-     
-      
 
+    if (userResponse.ok) {
       return userData.user;
     } else {
       throw new Error(userData.message);
@@ -90,20 +83,23 @@ export const getAuth = async (userId: string|undefined|null,getToken:GetToken) =
   }
 };
 
-export const getServerSideAuth = async (userId: string,token:string|null) => {
+export const getServerSideAuth = async (
+  userId: string,
+  token: string | null
+) => {
   try {
-    const userResponse = await fetch(`${backendUrl}authenticatedUser/${userId}`, {
-      cache: "no-cache",
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-        mode: 'cors',
+    const userResponse = await fetch(`${backendUrl}auth/${userId}`,
+      {
+        cache: "no-cache",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+          mode: "cors",
+        },
       }
-    });
+    );
     const userData = await userResponse.json();
     if (userResponse.ok) {
-      
-
       return userData.user;
     } else {
       throw new Error(userData.message);

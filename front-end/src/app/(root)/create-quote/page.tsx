@@ -39,10 +39,10 @@ const formSchema = z.object({
   quoteTitle: z.string().min(2),
   quoteDescription: z.string().min(2),
 });
-const voiceCategories = ["brian", "bill", "george", "lilly"];
+const voiceCategories = ["Brian", "Bill", "George", "Lilly"];
 
 const CreateQuote = () => {
-  const [voiceType, setVoiceType] = useState<Voice>("brian");
+  const [voiceType, setVoiceType] = useState<Voice>("Brian");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [imagePrompt, setImagePrompt] = useState("");
   const [imageUrl, setImageUrl] = useState("");
@@ -148,7 +148,8 @@ const CreateQuote = () => {
                   )}
                 >
                   <SelectValue
-                    placeholder="Select AI Voice"
+                    placeholder={"Brian"}
+                    
                     className="placeholder:text-gray-1 "
                   />
                 </SelectTrigger>

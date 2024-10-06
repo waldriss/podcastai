@@ -9,16 +9,22 @@ export const generateAudio = async (
 ): Promise<any> => {
   try {
     let voiceValue;
+    
     switch (voice) {
-      case "brian":
+      case "Brian":
         voiceValue = "nPczCjzI2devNBz1zQrb";
-      case "bill":
+        break
+      case "Bill":
         voiceValue = "pqHfZKP75CvOlQylNhV4";
-      case "george":
+        break
+      case "George":
         voiceValue = "JBFqnCBsd6RMkjVDRZzb";
-      case "lilly":
+        break
+      case "Lilly":
         voiceValue = "pFZP5JQG7iQjIQuC4Bku";
+        break
     }
+    
     const token = await getToken();
     const res = await fetch(`${backendUrl}generate-audio`, {
       method: "POST",

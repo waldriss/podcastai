@@ -2,7 +2,7 @@
 import { ClerkProvider } from "@clerk/nextjs";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React from "react";
-import AuthProvider from "./AuthProvider";
+import ServerAuthProvider from "./ServerAuthProvider";
 
 const Providers = ({
   children,
@@ -28,9 +28,9 @@ const Providers = ({
           },
         }}
       >
-        <AuthProvider>
+        
         {children}
-        </AuthProvider>
+       
         
       </ClerkProvider>
     </QueryClientProvider>
