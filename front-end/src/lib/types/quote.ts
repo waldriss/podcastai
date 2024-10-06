@@ -17,3 +17,10 @@ export interface CreateQuoteParams{
     views: number,
     audioDuration:number
 }
+
+export interface TrendingQuote{
+    id:number,
+    title:string,
+    description:string,
+    imageUrl:string
+}

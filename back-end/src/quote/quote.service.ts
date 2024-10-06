@@ -51,4 +51,26 @@ export class QuoteService {
       );
     }
   }
+  async getTrendingQuotes(){
+    try {
+      const quotes=await this.prisma.quote.findMany({
+        select:{
+          id:true,
+          description:true,
+          title:true,
+          imageUrl:true
+        }
+        ,
+        take:20
+      })
+      return {quotes}
+    } catch (error) {
+      throw new HttpException(
+        { message: `Error getting trending quotes:${error.message}` },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+      
+    }
+     
+  }
 }

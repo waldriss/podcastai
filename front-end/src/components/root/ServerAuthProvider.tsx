@@ -14,7 +14,7 @@ const ServerAuthProvider = async({
   let initialAuthenticatedUser:TAuthenticatedUser|undefined
   if(sessionClaims?.userId){
     initialAuthenticatedUser=await getServerSideAuth(sessionClaims.userId,token);
-    console.log(initialAuthenticatedUser)
+    
   }
 
   return (

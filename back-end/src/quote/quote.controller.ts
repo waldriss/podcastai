@@ -17,7 +17,7 @@ export class QuoteController {
 
   @Post('create-quote')
   @UseInterceptors(AnyFilesInterceptor())
-  createQuote(
+  async createQuote(
     @Body() createQuoteParamsDto: CreateQuoteParamsDto,
     @UploadedFiles() files: Array<Express.Multer.File>,
     @AuthenticatedUserId() authId: number
@@ -26,5 +26,11 @@ export class QuoteController {
     const imageFile = files.find(file => file.fieldname === 'imageFile');
 
     return this.quoteService.createQuote({...createQuoteParamsDto,audioFile,imageFile},authId)
+  }
+
+  @Get('trending-quotes')
+  async getTrendingQuotes(){
+    return this.quoteService.getTrendingQuotes();
+
   }
 }

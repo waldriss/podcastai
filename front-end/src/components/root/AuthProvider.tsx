@@ -26,7 +26,6 @@ const AuthProvider = ({
   const { setauthenticatedUser } = UseAuthenticatedUser();
 
   const setAuthenticatedUser = useCallback(() => {
-    console.log(authenticatedUser);
     setauthenticatedUser(authenticatedUser);
   }, [authenticatedUser, setauthenticatedUser]);
 
