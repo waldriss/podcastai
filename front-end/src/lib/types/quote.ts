@@ -23,6 +23,7 @@ export interface TrendingQuote {
   description: string;
   imageUrl: string;
 }
+export interface SimilarVoiceQuote extends TrendingQuote{}
 
 export interface QuoteDetailPlayerProps {
   audioUrl: string;

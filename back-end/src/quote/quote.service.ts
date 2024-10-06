@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateQuoteParams } from './types/quote.type';
 import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
 import { PrismaService } from 'src/db/prisma.service';
+import { VoiceName } from 'src/shared/types';
 
 @Injectable()
 export class QuoteService {
@@ -66,6 +67,28 @@ export class QuoteService {
     } catch (error) {
       throw new HttpException(
         { message: `Error getting trending quotes:${error.message}` },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+  async getQuotesByVoice(voice:VoiceName) {
+    try {
+      const quotes = await this.prisma.quote.findMany({
+        select: {
+          id: true,
+          description: true,
+          title: true,
+          imageUrl: true,
+        },
+        where:{
+          voiceType:voice
+        },
+        take: 20,
+      });
+      return { quotes };
+    } catch (error) {
+      throw new HttpException(
+        { message: `Error getting quotes by voice:${error.message}` },
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }

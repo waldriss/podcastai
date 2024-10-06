@@ -3,7 +3,9 @@ import {
   CreateQuoteParams,
   GenerateAudioParams,
   Quote,
+  SimilarVoiceQuote,
   TrendingQuote,
+  Voice,
 } from "@/lib/types/quote";
 
 const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
@@ -180,7 +182,10 @@ export const getServerTrendingQuotes = async (
   }
 };
 
-export const getQuoteById = async (id:string,getToken: GetToken): Promise<Quote> => {
+export const getQuoteById = async (
+  id: string,
+  getToken: GetToken
+): Promise<Quote> => {
   try {
     const token = await getToken();
 
@@ -201,7 +206,10 @@ export const getQuoteById = async (id:string,getToken: GetToken): Promise<Quote>
   }
 };
 
-export const getServerQuoteById = async (id:string,token: string): Promise<Quote> => {
+export const getServerQuoteById = async (
+  id: string,
+  token: string
+): Promise<Quote> => {
   try {
     const quoteResponse = await fetch(`${backendUrl}quotes/${id}`, {
       headers: {
@@ -215,6 +223,62 @@ export const getServerQuoteById = async (id:string,token: string): Promise<Quote
     }
     const quoteData: { quote: Quote } = await quoteResponse.json();
     return quoteData.quote;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getQuotesByVoice = async (
+  voice: Voice,
+  getToken: GetToken
+): Promise<SimilarVoiceQuote[] | []> => {
+  try {
+    const token = await getToken();
+
+    const quotesResponse = await fetch(
+      `${backendUrl}quotes-by-voice?voice=${voice}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    if (!quotesResponse.ok) {
+      return [];
+    }
+    const quotesData: { quotes: SimilarVoiceQuote[] } =
+      await quotesResponse.json();
+
+    return quotesData?.quotes ? quotesData.quotes : [];
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getServerQuotesByVoice = async (
+  voice: Voice,
+  token: string
+): Promise<SimilarVoiceQuote[] | []> => {
+  try {
+    const quotesResponse = await fetch(
+      `${backendUrl}quotes-by-voice?voice=${voice}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    if (!quotesResponse.ok) {
+      return [];
+    }
+    const quotesData: { quotes: SimilarVoiceQuote[] } =
+      await quotesResponse.json();
+
+    return quotesData?.quotes ? quotesData.quotes : [];
   } catch (error) {
     throw error;
   }

@@ -5,6 +5,7 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  Query,
   UploadedFiles,
   UseInterceptors,
 } from '@nestjs/common';
@@ -12,6 +13,7 @@ import { AnyFilesInterceptor } from '@nestjs/platform-express';
 import { CreateQuoteParamsDto } from './dto/create-quote.dto';
 import { QuoteService } from './quote.service';
 import { AuthenticatedUserId } from 'src/auth/authenticated-user-id.decorator';
+import { GetQuoteByVoiceDTO } from './dto/get-quotes-by-voice.dto';
 
 @Controller('')
 export class QuoteController {
@@ -33,6 +35,11 @@ export class QuoteController {
   @Get('trending-quotes')
   async getTrendingQuotes(){
     return this.quoteService.getTrendingQuotes();
+
+  }
+  @Get('quotes-by-voice')
+  async getQuotesByVoice(@Query() query:GetQuoteByVoiceDTO ){
+    return this.quoteService.getQuotesByVoice(query.voice);
 
   }
   @Get('/quotes/:id')
