@@ -39,6 +39,8 @@ export class QuoteController {
   }
   @Get('quotes-by-voice')
   async getQuotesByVoice(@Query() query:GetQuoteByVoiceDTO ){
+    
+    
     return this.quoteService.getQuotesByVoice(query.voice);
 
   }

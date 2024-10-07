@@ -95,7 +95,7 @@ export class QuoteService {
   }
   async getQuoteById(id: number) {
     try {
-      const quote = this.prisma.quote.findUnique({
+      const quote = await this.prisma.quote.findUnique({
         where: {
           id: id,
         },
@@ -109,6 +109,7 @@ export class QuoteService {
           }
         }
       });
+      
       return {quote}
     } catch (error) {
       throw new HttpException(

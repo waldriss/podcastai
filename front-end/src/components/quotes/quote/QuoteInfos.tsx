@@ -1,20 +1,25 @@
 "use client";
 import QuoteDetailPlayer from "@/components/quotes/quote/QuoteDetailPlayer";
-import { useGetQuoteById } from "@/lib/api/react-query/queries";
+import { useGetQuoteById, useGetQuotesByVoice } from "@/lib/api/react-query/queries";
 import { UseAuthenticatedUser } from "@/lib/store/store";
-import { Quote } from "@/lib/types/quote";
+import { Quote, SimilarVoiceQuote } from "@/lib/types/quote";
 import { useAuth } from "@clerk/nextjs";
 import Image from "next/image";
 import React from "react";
+import EmptyState from "./EmptyState";
+import QuoteCard from "@/components/root/QuoteCard";
 const QuoteInfos = ({
-  intialQuote,
+  initialQuote,
   quoteId,
+  initialSimilarVoiceQuotes
 }: {
-  intialQuote?: Quote;
+  initialQuote: Quote;
   quoteId: string;
+  initialSimilarVoiceQuotes?:SimilarVoiceQuote[]
 }) => {
   const { getToken } = useAuth();
-  const { data: quote } = useGetQuoteById(quoteId, intialQuote, getToken);
+  const { data: quote } = useGetQuoteById(quoteId, initialQuote, getToken);
+  const {data:similarVoiceQuotes}=useGetQuotesByVoice(initialSimilarVoiceQuotes,getToken,quote?.voiceType||initialQuote.voiceType)
   const {authenticatedUser}=UseAuthenticatedUser()
   const isOwner=authenticatedUser?.id===quote?.userId
   return (
@@ -54,15 +59,15 @@ const QuoteInfos = ({
           </p>
         </div>
       </div>
-      {/*
+      
     <section className="mt-8 flex flex-col gap-5">
       <h1 className="text-20 font-bold text-white-1">Similar Quotes</h1>
 
-      {similarQuotes && similarQuotes.length > 0 ? (
+      {similarVoiceQuotes && similarVoiceQuotes.length > 0 ? (
         <div className="quote_grid">
-          {similarQuotes?.map(({ id, title, description, imageUrl }) => (
+          {similarVoiceQuotes?.map(({ id, title, description,imageUrl }) => (
             <QuoteCard 
-              key={_id}
+              key={id}
               imgUrl={imageUrl as string}
               title={title}
               description={description}
@@ -80,7 +85,7 @@ const QuoteInfos = ({
         </>
       )}
     </section>
-    */}
+    
     </>
   );
 };

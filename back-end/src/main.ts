@@ -14,7 +14,7 @@ async function bootstrap() {
   });
   app.use(bodyParser.json({ limit: '10mb' }));
   app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
-  app.useGlobalPipes(new ValidationPipe({transform:true}))
+  app.useGlobalPipes(new ValidationPipe({transform:true,whitelist:true,forbidNonWhitelisted:true}))
 
   await app.listen(8000);
 }

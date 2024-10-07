@@ -35,6 +35,7 @@ export class AuthGuard implements CanActivate {
     return new Promise((resolve, reject) => {
       this.requireAuth(request, response, (err: any) => {
         if (err) {
+          console.log("authentication failed")
           reject(new UnauthorizedException('Authentication failed'));
         }
     

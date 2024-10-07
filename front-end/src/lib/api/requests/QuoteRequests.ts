@@ -187,6 +187,7 @@ export const getQuoteById = async (
   getToken: GetToken
 ): Promise<Quote> => {
   try {
+    
     const token = await getToken();
 
     const quoteResponse = await fetch(`${backendUrl}quotes/${id}`, {
@@ -262,6 +263,7 @@ export const getServerQuotesByVoice = async (
   token: string
 ): Promise<SimilarVoiceQuote[] | []> => {
   try {
+    
     const quotesResponse = await fetch(
       `${backendUrl}quotes-by-voice?voice=${voice}`,
       {
@@ -271,7 +273,7 @@ export const getServerQuotesByVoice = async (
         },
       }
     );
-
+    
     if (!quotesResponse.ok) {
       return [];
     }
@@ -280,6 +282,7 @@ export const getServerQuotesByVoice = async (
 
     return quotesData?.quotes ? quotesData.quotes : [];
   } catch (error) {
+    console.log(error);
     throw error;
   }
 };
