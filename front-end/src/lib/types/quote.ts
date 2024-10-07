@@ -1,3 +1,5 @@
+import { Author } from "./user";
+
 export type Voice = "Brian" | "Bill" | "George" | "Lilly";
 
 export interface GenerateAudioParams {
@@ -23,6 +25,11 @@ export interface TrendingQuote {
   description: string;
   imageUrl: string;
 }
+export interface exploreQuote{
+  id:number;
+  title:string;
+  imageUrl:string
+}
 export interface SimilarVoiceQuote extends TrendingQuote{}
 
 export interface QuoteDetailPlayerProps {
@@ -34,11 +41,7 @@ export interface QuoteDetailPlayerProps {
   isOwner: boolean;
   
 }
-export interface Author {
-  id: number;
-  name: string;
-  imageUrl: string;
-}
+
 export interface Quote {
   title: string;
   description: string;

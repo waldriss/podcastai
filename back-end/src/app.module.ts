@@ -9,11 +9,12 @@ import { AudioAiModule } from './audioAi/audioai.module';
 import { ImageAiModule } from './imageAi/imageai.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
 import { QuoteModule } from './quote/quote.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [ ConfigModule.forRoot({
     isGlobal: true, // Make ConfigModule available globally
-  }),AuthModule,AudioAiModule,ImageAiModule, CloudinaryModule,QuoteModule],
+  }),AuthModule,AudioAiModule,ImageAiModule, CloudinaryModule,QuoteModule,UserModule],
   controllers: [AppController],
   providers: [AppService,  {
     provide: APP_GUARD,
