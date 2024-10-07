@@ -51,8 +51,6 @@ export interface Quote {
   userId: number;
   id: number;
   isOwner: boolean;
-  authorImageUrl: string;
-  authorId: number;
   voicePrompt: string;
   imagePrompt: string;
   voiceType: Voice;

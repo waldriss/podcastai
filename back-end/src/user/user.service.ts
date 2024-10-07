@@ -7,6 +7,12 @@ export class UserService {
   async getTopAuthors() {
     try {
       const topAuthors = await this.prisma.user.findMany({
+        where:{
+            quotes:{
+                some:{}
+            }
+        }
+        ,
         orderBy: {
           quotes: {
             _count: 'desc',
@@ -32,6 +38,7 @@ export class UserService {
         },
         take: 3,
       });
+     
       return {topAuthors}
     } catch (error) {
       throw new HttpException(

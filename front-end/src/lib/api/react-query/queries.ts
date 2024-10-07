@@ -45,7 +45,7 @@ export const useGetAuthenticatedUser = (initialUser:TAuthenticatedUser|undefined
 
   export const useGetQuotesByVoice = (initialQuotes:SimilarVoiceQuote[]|undefined,getToken:GetToken,voice:Voice) => {
     return useQuery({
-      queryKey: [QUERY_KEYS.GET_TRENDING_QUOTES],
+      queryKey: [QUERY_KEYS.GET_QUOTES_BY_VOICE],
       queryFn: () => getQuotesByVoice(voice, getToken),
       initialData: initialQuotes,
       refetchOnWindowFocus: false,
@@ -55,7 +55,7 @@ export const useGetAuthenticatedUser = (initialUser:TAuthenticatedUser|undefined
   };
   export const useGetTopAuthors = (initialTopAuthors:TopAuthor[]|undefined,getToken:GetToken) => {
     return useQuery({
-      queryKey: [QUERY_KEYS.GET_TRENDING_QUOTES],
+      queryKey: [QUERY_KEYS.GET_TOP_AUTHORS],
       queryFn: () => getTopAuthors(getToken),
       initialData: initialTopAuthors,
       refetchOnWindowFocus: false,

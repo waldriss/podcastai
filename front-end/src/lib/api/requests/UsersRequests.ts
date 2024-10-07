@@ -18,8 +18,9 @@ export const getTopAuthors = async (
     if (!topAuthorsResponse.ok) {
       return [];
     }
-    const topAuthorsData: { topAuthors: TopAuthor[] } =
-      await topAuthorsResponse.json();
+    const topAuthorsData: { topAuthors: TopAuthor[] } =await topAuthorsResponse.json();
+    
+
 
     return topAuthorsData?.topAuthors ? topAuthorsData.topAuthors : [];
   } catch (error) {
