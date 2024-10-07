@@ -37,3 +37,13 @@ export type GetTokenOptions = {
   skipCache?: boolean;
 };
 export type GetToken = (options?: GetTokenOptions) => Promise<string | null>;
+
+
+
+export interface Audio {
+  title: string;
+  audioUrl: string;
+  authorName: string;
+  imageUrl: string;
+  quoteId: string;
+}
