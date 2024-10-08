@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { registerUserInDB } from "../requests/AuthRequests";
 import { UserToRegister } from "@/lib/types/user";
-import { createQuote, generateAudio, generateImage } from "../requests/QuoteRequests";
+import { createQuote, deleteQuote, generateAudio, generateImage } from "../requests/QuoteRequests";
 import { CreateQuoteParams, GenerateAudioParams } from "@/lib/types/quote";
 import { GetToken } from "@/lib/types";
 
@@ -37,6 +37,14 @@ export const useCreateQuote = (getToken:GetToken) => {
   return useMutation({
     mutationFn: (createQuoteParams:CreateQuoteParams) =>
       createQuote(createQuoteParams,getToken),
+    onSuccess: (data ) => {},
+  });
+};
+export const useDeleteQuote = (getToken:GetToken) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({id}:{id:number}) =>
+      deleteQuote(id,getToken),
     onSuccess: (data ) => {},
   });
 };

@@ -286,3 +286,30 @@ export const getServerQuotesByVoice = async (
     throw error;
   }
 };
+
+export const deleteQuote = async (
+  id: number,
+  getToken: GetToken
+) => {
+  try {
+    
+    const token = await getToken();
+    const response = await fetch(`${backendUrl}quote-delete/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      throw new Error(responseData.message); // Error message from the backend
+    }
+
+    return responseData;
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};

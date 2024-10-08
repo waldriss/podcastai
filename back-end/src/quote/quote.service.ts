@@ -71,7 +71,7 @@ export class QuoteService {
       );
     }
   }
-  async getQuotesByVoice(voice:VoiceName) {
+  async getQuotesByVoice(voice: VoiceName) {
     try {
       const quotes = await this.prisma.quote.findMany({
         select: {
@@ -80,8 +80,8 @@ export class QuoteService {
           title: true,
           imageUrl: true,
         },
-        where:{
-          voiceType:voice
+        where: {
+          voiceType: voice,
         },
         take: 20,
       });
@@ -99,21 +99,66 @@ export class QuoteService {
         where: {
           id: id,
         },
-        include:{
-          user:{
-            select:{
-              id:true,
-              name:true,
-              imageUrl:true
-            }
-          }
-        }
+        include: {
+          user: {
+            select: {
+              id: true,
+              name: true,
+              imageUrl: true,
+            },
+          },
+        },
       });
-      
-      return {quote}
+
+      return { quote };
     } catch (error) {
       throw new HttpException(
         { message: `Error getting quote by id:${error.message}` },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+  async getQuotes(search: string) {
+    try {
+      const quotes = await this.prisma.quote.findMany({
+        where: {
+          OR: [
+            { voicePrompt: { contains: search } },
+            { description: { contains: search } },
+            { imagePrompt: { contains: search } },
+            { user: { name: { contains: search } } },
+            { voiceType: { contains: search } },
+            { title: { contains: search } },
+          ],
+        },
+        select: {
+          id: true,
+          description: true,
+          title: true,
+          imageUrl: true,
+        },
+      });
+      return { quotes: quotes };
+    } catch (error) {
+      throw new HttpException(
+        { message: `Error getting getting quotes:${error.message}` },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  async deleteQuote(id: number, authId: number) {
+    try {
+      await this.prisma.quote.delete({
+        where: {
+          id: id,
+          userId: authId,
+        },
+      });
+      return { message: 'quote deleted' };
+    } catch (error) {
+      throw new HttpException(
+        { message: `Error getting deleting quote:${error.message}` },
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }

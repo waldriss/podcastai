@@ -1,36 +1,45 @@
-import Loader from '@/components/global/Loader';
-import { Button } from '@/components/ui/button';
-import { useToast } from '@/hooks/use-toast';
-import { UseAudio } from '@/lib/store/store';
-import { QuoteDetailPlayerProps } from '@/lib/types/quote'
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import profileimg from '@icons/profile.svg'
-import React, { useState } from 'react'
+import Loader from "@/components/global/Loader";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
+import { UseAudio } from "@/lib/store/store";
+import { QuoteDetailPlayerProps } from "@/lib/types/quote";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import profileimg from "@icons/profile.svg";
+import React, { useState } from "react";
+import { useDeleteQuote } from "@/lib/api/react-query/mutations";
+import { useAuth } from "@clerk/nextjs";
 
-const QuoteDetailPlayer = ({audioUrl,author,id,imageUrl,isOwner,title}:QuoteDetailPlayerProps) => {
+const QuoteDetailPlayer = ({
+  audioUrl,
+  author,
+  id,
+  imageUrl,
+  isOwner,
+  title,
+}: QuoteDetailPlayerProps) => {
   const router = useRouter();
   const { setAudio } = UseAudio();
   const { toast } = useToast();
-  const [isDeleting, setIsDeleting] = useState(false);
-
+  const { getToken } = useAuth();
+  const [showDeleteButton,setShowDeleteButton]=useState(false)
+  const { mutateAsync: deleteQuote, isPending: isDeleting } =
+    useDeleteQuote(getToken);
 
   const handleDelete = async () => {
-    /*
     try {
-      await deletePodcast({ podcastId, imageStorageId, audioStorageId });
+      await deleteQuote({ id });
       toast({
-        title: "Podcast deleted",
+        title: "quote deleted",
       });
       router.push("/");
     } catch (error) {
-      console.error("Error deleting podcast", error);
+      console.error("Error deleting quote", error);
       toast({
-        title: "Error deleting podcast",
+        title: "Error deleting quote",
         variant: "destructive",
       });
     }
-      */
   };
 
   const handlePlay = () => {
@@ -38,8 +47,8 @@ const QuoteDetailPlayer = ({audioUrl,author,id,imageUrl,isOwner,title}:QuoteDeta
       title: title,
       audioUrl,
       imageUrl,
-      authorName:author.name,
-      quoteId:id,
+      authorName: author.name,
+      quoteId: id,
     });
   };
 
@@ -67,13 +76,15 @@ const QuoteDetailPlayer = ({audioUrl,author,id,imageUrl,isOwner,title}:QuoteDeta
               }}
             >
               <Image
-                src={author?.imageUrl||profileimg}
+                src={author?.imageUrl || profileimg}
                 width={30}
                 height={30}
                 alt="Caster icon"
                 className="size-[30px] rounded-full object-cover"
               />
-              <h2 className="text-16 font-normal text-white-3">{author.name}</h2>
+              <h2 className="text-16 font-normal text-white-3">
+                {author.name}
+              </h2>
             </figure>
           </article>
 
@@ -99,9 +110,9 @@ const QuoteDetailPlayer = ({audioUrl,author,id,imageUrl,isOwner,title}:QuoteDeta
             height={30}
             alt="Three dots icon"
             className="cursor-pointer"
-            onClick={() => setIsDeleting((prev) => !prev)}
+            onClick={() => setShowDeleteButton((prev) => !prev)}
           />
-          {isDeleting && (
+          {showDeleteButton && (
             <div
               className="absolute -left-32 -top-2 z-10 flex w-32 cursor-pointer justify-center gap-2 rounded-md bg-black-6 py-1.5 hover:bg-black-2"
               onClick={handleDelete}
@@ -121,4 +132,4 @@ const QuoteDetailPlayer = ({audioUrl,author,id,imageUrl,isOwner,title}:QuoteDeta
   );
 };
 
-export default QuoteDetailPlayer
+export default QuoteDetailPlayer;
