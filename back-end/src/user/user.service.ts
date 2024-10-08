@@ -42,7 +42,7 @@ export class UserService {
       return {topAuthors}
     } catch (error) {
       throw new HttpException(
-        { message: `Error getting explore podcasters:${error.message}` },
+        { message: `Error getting explore Top Authors:${error.message}` },
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }

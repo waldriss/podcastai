@@ -3,6 +3,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React from "react";
 import ServerAuthProvider from "./ServerAuthProvider";
+import AudioProvider from "../global/AudioProvider";
 
 const Providers = ({
   children,
@@ -28,10 +29,7 @@ const Providers = ({
           },
         }}
       >
-        
-        {children}
-       
-        
+        <AudioProvider>{children}</AudioProvider>
       </ClerkProvider>
     </QueryClientProvider>
   );

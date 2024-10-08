@@ -81,7 +81,7 @@ const RightSidebar = ({
               </figure>
               <div className="flex items-center">
                 <p className="text-12 font-normal text-white-1">
-                  {author._count.quotes} podcasts
+                  {author._count.quotes} quotes
                 </p>
               </div>
             </div>

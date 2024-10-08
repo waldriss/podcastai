@@ -1,8 +1,10 @@
 import LeftSidebar from "@/components/root/LeftSidebar";
 import MobileNav from "@/components/root/MobileNav";
-import RightSidebar from "@/components/root/RightSidebar";
+
 import Image from "next/image";
 import { Toaster } from "@/components/ui/toaster"
+import RightSidebarProvider from "@/components/root/RightSidebarProvider";
+import QuotePlayer from "@/components/root/QuotePlayer";
 
 export default function RootLayout({
   children,
@@ -31,8 +33,9 @@ export default function RootLayout({
             </div>
           </div>
         </section>
-        <RightSidebar />
+        <RightSidebarProvider />
       </main>
+      <QuotePlayer/>
     </div>
   );
 }

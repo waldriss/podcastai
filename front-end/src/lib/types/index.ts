@@ -45,5 +45,5 @@ export interface Audio {
   audioUrl: string;
   authorName: string;
   imageUrl: string;
-  quoteId: string;
+  quoteId: number;
 }
