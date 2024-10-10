@@ -15,6 +15,7 @@ import { CreateQuoteParamsDto } from './dto/create-quote.dto';
 import { QuoteService } from './quote.service';
 import { AuthenticatedUserId } from 'src/auth/authenticated-user-id.decorator';
 import { GetQuoteByVoiceDTO } from './dto/get-quotes-by-voice.dto';
+import { GetQuotesParamsDto } from './dto/get-quotes.dto';
 
 @Controller('')
 export class QuoteController {
@@ -49,7 +50,8 @@ export class QuoteController {
     return this.quoteService.getQuoteById(id);
   }
   @Get("quotes")
-  async getQuotes(){
+  async getQuotes(@Query() query:GetQuotesParamsDto){
+    return this.quoteService.getQuotes(query.search)
     
   }
   @Delete('quote-delete/:id')

@@ -1,6 +1,7 @@
 import { GetToken } from "@/lib/types";
 import {
   CreateQuoteParams,
+  DiscoverQuote,
   GenerateAudioParams,
   Quote,
   SimilarVoiceQuote,
@@ -187,7 +188,6 @@ export const getQuoteById = async (
   getToken: GetToken
 ): Promise<Quote> => {
   try {
-    
     const token = await getToken();
 
     const quoteResponse = await fetch(`${backendUrl}quotes/${id}`, {
@@ -263,7 +263,6 @@ export const getServerQuotesByVoice = async (
   token: string
 ): Promise<SimilarVoiceQuote[] | []> => {
   try {
-    
     const quotesResponse = await fetch(
       `${backendUrl}quotes-by-voice?voice=${voice}`,
       {
@@ -273,7 +272,7 @@ export const getServerQuotesByVoice = async (
         },
       }
     );
-    
+
     if (!quotesResponse.ok) {
       return [];
     }
@@ -287,12 +286,8 @@ export const getServerQuotesByVoice = async (
   }
 };
 
-export const deleteQuote = async (
-  id: number,
-  getToken: GetToken
-) => {
+export const deleteQuote = async (id: number, getToken: GetToken) => {
   try {
-    
     const token = await getToken();
     const response = await fetch(`${backendUrl}quote-delete/${id}`, {
       method: "DELETE",
@@ -311,5 +306,55 @@ export const deleteQuote = async (
     return responseData;
   } catch (error) {
     console.error("Error:", error);
+  }
+};
+
+export const getQuotes = async (
+  search: string,
+  getToken: GetToken
+): Promise<DiscoverQuote[] | []> => {
+  try {
+    const token = await getToken();
+
+    const quotesResponse = await fetch(`${backendUrl}quotes?search=${search}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!quotesResponse.ok) {
+      return [];
+    }
+    const quotesData: { quotes: DiscoverQuote[] } = await quotesResponse.json();
+
+    return quotesData?.quotes ? quotesData.quotes : [];
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getServerQuotes = async (
+  search: string,
+  token: string
+): Promise<DiscoverQuote[] | []> => {
+  try {
+   
+    const quotesResponse = await fetch(`${backendUrl}quotes?search=${search}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  
+    if (!quotesResponse.ok) {
+      return [];
+    }
+   
+    const quotesData: { quotes: DiscoverQuote[] } = await quotesResponse.json();
+
+    return quotesData?.quotes ? quotesData.quotes : [];
+  } catch (error) {
+    throw error;
   }
 };

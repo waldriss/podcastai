@@ -1,10 +1,22 @@
+
+import DiscoverQuotes from "@/components/discover/DiscoverQuotes";
+import { getServerQuotes } from "@/lib/api/requests/QuoteRequests";
+import { DiscoverQuote } from "@/lib/types/quote";
+
+import { auth } from "@clerk/nextjs/server";
 import React from "react";
 
-const Discover = () => {
+const Discover = async () => {
+  const {getToken}=auth()
+  const token = await getToken()
+  let quotes:DiscoverQuote[]|undefined
+  if(token) quotes= await getServerQuotes("",token);
+
+
   return (
-    <div>
-      <h1 className="text-20 font-bold text-white-1">Discover</h1>
-    </div>
+    <>
+    <DiscoverQuotes initialDiscoverQuotes={quotes} />
+    </>
   );
 };
 

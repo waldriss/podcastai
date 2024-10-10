@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
-const EmptyState = ({title,buttonLink,buttonText}:{title:string,buttonLink:string,buttonText:string}) => {
+const EmptyState = ({title,buttonLink,buttonText}:{title:string,buttonLink?:string,buttonText?:string}) => {
   return (
     <section className="flex-center size-full flex-col gap-3">
       <Image src="/icons/emptyState.svg" width={250} height={250} alt="empty state" />

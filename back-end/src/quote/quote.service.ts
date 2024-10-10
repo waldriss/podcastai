@@ -120,6 +120,7 @@ export class QuoteService {
   }
   async getQuotes(search: string) {
     try {
+      
       const quotes = await this.prisma.quote.findMany({
         where: {
           OR: [

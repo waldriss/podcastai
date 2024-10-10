@@ -31,6 +31,7 @@ export interface exploreQuote{
   imageUrl:string
 }
 export interface SimilarVoiceQuote extends TrendingQuote{}
+export interface DiscoverQuote extends TrendingQuote{}
 
 export interface QuoteDetailPlayerProps {
   audioUrl: string;
