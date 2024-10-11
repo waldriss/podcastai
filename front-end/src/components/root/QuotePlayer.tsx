@@ -91,7 +91,7 @@ const QuotePlayer = () => {
     }
   }, [audio]);
   const handleLoadedMetadata = () => {
-    console.log(audioRef.current?.duration);
+   
     if (audioRef.current) {
       setDuration(audioRef.current.duration);
     }

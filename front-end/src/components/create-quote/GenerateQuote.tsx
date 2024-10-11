@@ -27,7 +27,7 @@ const GenerateQuote = ({voicePrompt,audio,setAudio,setAudioDuration,setVoiceProm
     const arrayBuffer= await generateAudio({input:voicePrompt,voice:voiceType})
     const blob = new Blob([arrayBuffer], { type: 'audio/mpeg' });
     const audioUrl = URL.createObjectURL(blob);
-    console.log(arrayBuffer);
+  
     setAudio(audioUrl);
 
     } catch (error) {

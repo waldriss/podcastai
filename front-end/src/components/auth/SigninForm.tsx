@@ -44,7 +44,7 @@ const SigninForm = () => {
         password: values.password,
       });
       if (signedin) {
-        console.log("ici");
+        
         if (setActive) {
           await setActive({ session: signedin.createdSessionId });
         
@@ -52,7 +52,7 @@ const SigninForm = () => {
         }
       }
     } catch (error) {
-      console.log("ici2");
+      
       console.log(error);
       setIsLoading(false);
       

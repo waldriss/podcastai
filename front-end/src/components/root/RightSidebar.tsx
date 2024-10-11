@@ -10,20 +10,40 @@ import { TopAuthor } from "@/lib/types/user";
 import { useGetTopAuthors } from "@/lib/api/react-query/queries";
 import { useRouter } from "next/navigation";
 import Carousel from "./Carousel";
+import { ExploreQuote } from "@/lib/types/quote";
+
+interface ExploreQuotes_withName {
+  quote: ExploreQuote;
+  authorName: string;
+}
 
 const RightSidebar = ({
   initialTopAuthors,
 }: {
   initialTopAuthors?: TopAuthor[];
 }) => {
-  
   const router = useRouter();
   const { getToken } = useAuth();
   const { data: topAuthors } = useGetTopAuthors(initialTopAuthors, getToken);
-  const exploreQuotes_withName = topAuthors?.map((topAuthor) => ({
-    quote: topAuthor.quotes[0],
-    authorName: topAuthor.name,
-  }));
+  let exploreQuotes_withName: ExploreQuotes_withName[] = [];
+  if (topAuthors) {
+    if (topAuthors.length < 3) {
+      topAuthors.forEach((topAuthor) => {
+        topAuthor.quotes.forEach((quote) => {
+          exploreQuotes_withName = [
+            ...exploreQuotes_withName,
+            { quote: quote, authorName: topAuthor.name },
+          ];
+        });
+      });
+    } else {
+      exploreQuotes_withName = topAuthors?.map((topAuthor) => ({
+        quote: topAuthor.quotes[0],
+        authorName: topAuthor.name,
+      }));
+    }
+  }
+
   const audio = { audioUrl: true };
   const { authenticatedUser } = UseAuthenticatedUser();
 
@@ -52,12 +72,14 @@ const RightSidebar = ({
           </div>
         </Link>
       )}
-      
-      {exploreQuotes_withName&&<section>
-        <Header headerTitle="ExploreQuotes" />
-        <Carousel exploreQuotes_withName={exploreQuotes_withName} />
-      </section>}
-      
+
+      {exploreQuotes_withName.length > 0 && (
+        <section>
+          <Header headerTitle="ExploreQuotes" />
+          <Carousel exploreQuotes_withName={exploreQuotes_withName} />
+        </section>
+      )}
+
       <section className="flex flex-col gap-8 pt-12">
         <Header headerTitle="Top Authors" />
         <div className="flex flex-col gap-6">
@@ -69,7 +91,7 @@ const RightSidebar = ({
             >
               <figure className="flex items-center gap-2">
                 <Image
-                  src={author?.imageUrl||"./icons/profile.svg"}
+                  src={author?.imageUrl || "./icons/profile.svg"}
                   alt={author.name}
                   width={40}
                   height={40}

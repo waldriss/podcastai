@@ -52,7 +52,7 @@ const SignupForm = () => {
         name: values.name,
         password: values.password,
       });
-      console.log(resp);
+      
       setIsLoading(false);
     } catch (error) {
       console.log(error);

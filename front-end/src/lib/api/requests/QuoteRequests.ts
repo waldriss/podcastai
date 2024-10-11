@@ -127,7 +127,7 @@ export const createQuote = async (
       throw new Error(error.message);
     }
     const data = await res.json();
-    console.log(data);
+   
 
     return data;
   } catch (error) {
@@ -314,7 +314,7 @@ export const getQuotes = async (
   getToken: GetToken
 ): Promise<DiscoverQuote[] | []> => {
   try {
-    console.log(search)
+    
     const token = await getToken();
 
     const quotesResponse = await fetch(`${backendUrl}quotes?search=${search}`, {

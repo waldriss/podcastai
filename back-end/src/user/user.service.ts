@@ -27,7 +27,7 @@ export class UserService {
             orderBy: {
               views: 'desc',
             },
-            take: 1,
+            take: 3,
           },
           _count: {
             select: {
