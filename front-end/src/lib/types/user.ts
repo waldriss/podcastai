@@ -17,11 +17,11 @@ export interface Author {
   imageUrl?: string;
 }
 
-export interface TopAuthor extends Author{
+export interface AuthorDetails extends Author{
   quotes:exploreQuote[];
   _count: {
     quotes: number;
   }
-  
-
 }
+
+export interface TopAuthor extends AuthorDetails{}

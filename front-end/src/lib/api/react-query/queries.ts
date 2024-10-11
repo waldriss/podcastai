@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "./queryKeys";
-import { TAuthenticatedUser, TopAuthor } from "@/lib/types/user";
+import { AuthorDetails, TAuthenticatedUser, TopAuthor } from "@/lib/types/user";
 import { getAuth } from "../requests/AuthRequests";
 import { GetToken } from "@/lib/types";
 import {
@@ -16,7 +16,7 @@ import {
   getQuotesByVoice,
   getTrendingQuotes,
 } from "../requests/QuoteRequests";
-import { getTopAuthors } from "../requests/UsersRequests";
+import { getAuthor, getTopAuthors } from "../requests/UsersRequests";
 export const useGetAuthenticatedUser = (
   initialUser: TAuthenticatedUser | undefined,
   getToken: GetToken,
@@ -98,6 +98,22 @@ export const useGetQuotes = (
     queryKey: [QUERY_KEYS.GET_QUOTES,getToken,search],
     queryFn: () => getQuotes(search,getToken),
     initialData: initialQuotes,
+    refetchOnWindowFocus: false,
+    refetchOnMount: true,
+    staleTime: 100,
+  });
+};
+
+
+export const useGetAuthor = (
+  initialAuthor: AuthorDetails | undefined,
+  getToken: GetToken,
+  id:string
+) => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.GET_TOP_AUTHORS],
+    queryFn: () => getAuthor(id,getToken),
+    initialData: initialAuthor,
     refetchOnWindowFocus: false,
     refetchOnMount: true,
     staleTime: 100,
