@@ -48,7 +48,8 @@ export class UserService {
   }
   async getAuthor(id: number) {
     try {
-      const Author = await this.prisma.user.findUnique({
+      
+      const author = await this.prisma.user.findUnique({
         where: {
           id: id,
         },
@@ -58,6 +59,9 @@ export class UserService {
               id: true,
               title: true,
               imageUrl: true,
+              audioUrl:true,
+              views:true,
+              description:true,
             },
           },
           _count: {
@@ -67,8 +71,9 @@ export class UserService {
           },
         },
       });
+      
 
-      return { Author };
+      return { author };
     } catch (error) {
       throw new HttpException(
         { message: `Error getting Author:${error.message}` },

@@ -1,4 +1,4 @@
-import { exploreQuote } from "./quote";
+import { ExploreQuote, ProfileQuote } from "./quote";
 
 export interface UserToRegister {
   email: string;
@@ -18,10 +18,15 @@ export interface Author {
 }
 
 export interface AuthorDetails extends Author{
-  quotes:exploreQuote[];
+  quotes:ProfileQuote[];
   _count: {
     quotes: number;
   }
 }
 
-export interface TopAuthor extends AuthorDetails{}
+export interface TopAuthor extends Author{
+  quotes:ExploreQuote[];
+  _count: {
+    quotes: number;
+  }
+}

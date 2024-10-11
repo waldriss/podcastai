@@ -12,6 +12,7 @@ export class UserController {
    }
    @Get('authors/:id')
    async getAuthor(@Param('id', ParseIntPipe) id: number){
+   
     return this.userService.getAuthor(id)
 
    }

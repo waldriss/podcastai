@@ -7,10 +7,10 @@ import useEmblaCarousel from 'embla-carousel-react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import Loader from '../global/Loader'
-import { exploreQuote } from '@/lib/types/quote'
+import { ExploreQuote } from '@/lib/types/quote'
 
 interface CarouselProps{
-  quote:exploreQuote;
+  quote:ExploreQuote;
   authorName:string
 
 }
@@ -36,7 +36,7 @@ const Carousel = ({ exploreQuotes_withName }:{exploreQuotes_withName:CarouselPro
     emblaApi,
     onNavButtonClick
   )
-
+console.log(exploreQuotes_withName)
  
 
   if(!exploreQuotes_withName) return <Loader />

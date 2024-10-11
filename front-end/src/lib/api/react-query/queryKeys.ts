@@ -4,5 +4,6 @@ export enum QUERY_KEYS {
   GET_QUOTE_BY_ID="getQuoteById",
   GET_TOP_AUTHORS="getTopAuthors",
   GET_QUOTES_BY_VOICE="getQuoteByVoice",
-  GET_QUOTES="getQuotes"
+  GET_QUOTES="getQuotes",
+  GET_AUTHOR="getAuthor"
 }

@@ -25,10 +25,16 @@ export interface TrendingQuote {
   description: string;
   imageUrl: string;
 }
-export interface exploreQuote{
+export interface ExploreQuote{
   id:number;
   title:string;
   imageUrl:string
+}
+export interface ProfileQuote extends ExploreQuote{
+  audioUrl:string;
+  views:number;
+  description: string;
+
 }
 export interface SimilarVoiceQuote extends TrendingQuote{}
 export interface DiscoverQuote extends TrendingQuote{}

@@ -111,7 +111,7 @@ export const useGetAuthor = (
   id:string
 ) => {
   return useQuery({
-    queryKey: [QUERY_KEYS.GET_TOP_AUTHORS],
+    queryKey: [QUERY_KEYS.GET_AUTHOR,id],
     queryFn: () => getAuthor(id,getToken),
     initialData: initialAuthor,
     refetchOnWindowFocus: false,
