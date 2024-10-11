@@ -54,15 +54,18 @@ const Carousel = ({
             <div className="carousel_box">
               <figure
                 key={exploreQuote.id}
-                className=""
+                className="px-2"
                 onClick={() => router.push(`/quotes/${exploreQuote.id}`)}
               >
-                <Image
-                  src={exploreQuote.imageUrl}
-                  alt="card"
-                  fill
-                  className="absolute size-full rounded-xl border-none"
-                />
+                <div className="absolute pr-2 top-0 flex justify-center items-center">
+                  <Image
+                    src={exploreQuote.imageUrl}
+                    alt="card"
+                    fill
+                    className="!w-full h-full !relative rounded-xl"
+                  />
+                </div>
+
                 <div className="glassmorphism-black relative z-10 flex flex-col rounded-b-xl p-4">
                   <h2 className="text-14 font-semibold text-white-1">
                     {exploreQuote.title}
