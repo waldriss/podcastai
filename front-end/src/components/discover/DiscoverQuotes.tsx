@@ -1,6 +1,6 @@
 "use client"
 import { DiscoverQuote } from '@/lib/types/quote'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import SearchBar from './SearchBar'
 import QuoteCard from '../root/QuoteCard'
 import { useGetQuotes } from '@/lib/api/react-query/queries'
