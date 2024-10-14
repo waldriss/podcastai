@@ -97,3 +97,44 @@ export const getServerAuthor = async (
     throw error;
   }
 };
+
+
+export const changeProfileImage = async (
+  imageUrl:string,
+  getToken: GetToken
+) => {
+  try {
+    
+    const token = await getToken();
+  
+    const imageBlob = await fetch(imageUrl).then((res) =>
+      res.blob()
+    );
+    const formData = new FormData();
+
+    formData.append("imageFile", imageBlob, "image.png"); // 'imageFile' is the key
+   
+
+    const res = await fetch(`${backendUrl}change-image`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    });
+
+    if (!res.ok) {
+      const error = await res.json();
+
+      throw new Error(error.message);
+    }
+    const data = await res.json();
+   
+
+    return data;
+  } catch (error) {
+    console.log(error);
+
+    throw error;
+  }
+};

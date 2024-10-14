@@ -8,6 +8,7 @@ export interface UserToRegister {
 
 export interface TAuthenticatedUser {
   name: string;
+  imageUrl?: string;
   id: number;
 }
 

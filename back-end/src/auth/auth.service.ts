@@ -73,6 +73,7 @@ export class AuthService {
         select: {
           id: true,
           name: true,
+          imageUrl:true
         },
       });
       if (user) {

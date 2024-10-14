@@ -1,9 +1,10 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
 import { PrismaService } from 'src/db/prisma.service';
 
 @Injectable()
 export class UserService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService,private cloudinaryService:CloudinaryService) {}
   async getTopAuthors() {
     try {
       const topAuthors = await this.prisma.user.findMany({
@@ -80,5 +81,34 @@ export class UserService {
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
+  }
+  async changeProfileImage(imageFile: Express.Multer.File,id:number){
+    try {
+      
+      const existingUser=this.prisma.user.findUnique({where:{id:id}});
+      if(existingUser){
+        const imageUrl= await this.cloudinaryService.uploadProfileImage(imageFile);
+        await this.prisma.user.update({
+          where:{
+            id:id
+          },
+          data:{
+            imageUrl:imageUrl
+          }
+        });
+        return {"message":"profile image changed Sucessfully"}
+
+      }else{
+        throw Error("user does not exist")
+      }
+      
+    } catch (error) {
+      throw new HttpException(
+        { message: `Error changing profile pic:${error.message}` },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+      
+    }
+
   }
 }

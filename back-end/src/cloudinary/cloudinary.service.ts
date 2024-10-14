@@ -22,7 +22,26 @@ export class CloudinaryService {
         const result = await cloudinary.uploader.upload(base64Image, {
           public_id: uniqueName,
           folder: 'quotes/thumbnails',
-          format: 'webp',
+        });
+        return result.secure_url;
+        
+    } catch (error) {
+        throw new HttpException(
+            { message: `Error uploading the image` },
+            HttpStatus.INTERNAL_SERVER_ERROR,
+          );
+    }
+   
+  }
+  async uploadProfileImage(file: Express.Multer.File): Promise<string> {
+    try {
+        const uniqueName = `${uuidv4()}`;
+        const imageFormat = file.mimetype.split("/")[1] || "jpeg";
+        const base64Image = `data:image/${imageFormat};base64,${file.buffer.toString("base64")}`;
+
+        const result = await cloudinary.uploader.upload(base64Image, {
+          public_id: uniqueName,
+          folder: 'quotes/profile',
         });
         return result.secure_url;
         

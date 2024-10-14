@@ -11,7 +11,8 @@ import { useGetTopAuthors } from "@/lib/api/react-query/queries";
 import { useRouter } from "next/navigation";
 import Carousel from "./Carousel";
 import { ExploreQuote } from "@/lib/types/quote";
-
+import profileicon from "@icons/profile.svg";
+import ProfileDropDown from "./ProfileDropDown";
 interface ExploreQuotes_withName {
   quote: ExploreQuote;
   authorName: string;
@@ -53,23 +54,27 @@ const RightSidebar = ({
       })}
     >
       {authenticatedUser && (
-        <Link
-          href={`/profile/${authenticatedUser.id}`}
-          className="flex gap-3 pb-12"
-        >
-          <UserButton />
-          <div className="flex w-full items-center justify-between">
-            <h1 className="text-16 truncate font-semibold text-white-1">
-              {authenticatedUser.name}
-            </h1>
+        <div className="flex gap-3 pb-12">
+          <Link href={`/profile/${authenticatedUser.id}`}>
             <Image
-              src="/icons/right-arrow.svg"
-              alt="arrow"
-              width={24}
-              height={24}
+              height={50}
+              width={50}
+              src={authenticatedUser?.imageUrl || profileicon}
+              alt="profile_icon"
+              className="rounded-full aspect-square object-cover"
             />
+          </Link>
+
+          <div className="flex w-full items-center justify-between">
+            <Link href={`/profile/${authenticatedUser.id}`}>
+              <h1 className="text-16 truncate font-semibold text-white-1">
+                {authenticatedUser.name}
+              </h1>
+            </Link>
+
+            <ProfileDropDown/>
           </div>
-        </Link>
+        </div>
       )}
 
       {exploreQuotes_withName.length > 0 && (
@@ -94,7 +99,7 @@ const RightSidebar = ({
                   alt={author.name}
                   width={40}
                   height={40}
-                  className="aspect-square rounded-lg"
+                  className="aspect-square rounded-full object-cover"
                 />
                 <h2 className="text-14 font-semibold text-white-1">
                   {author.name}
