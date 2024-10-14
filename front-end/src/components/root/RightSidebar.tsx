@@ -44,7 +44,6 @@ const RightSidebar = ({
     }
   }
 
-  const audio = { audioUrl: true };
   const { authenticatedUser } = UseAuthenticatedUser();
 
   return (

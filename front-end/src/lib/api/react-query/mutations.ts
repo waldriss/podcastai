@@ -1,9 +1,15 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { registerUserInDB } from "../requests/AuthRequests";
 import { UserToRegister } from "@/lib/types/user";
-import { createQuote, deleteQuote, generateAudio, generateImage } from "../requests/QuoteRequests";
+import {
+  createQuote,
+  deleteQuote,
+  generateAudio,
+  generateImage,
+} from "../requests/QuoteRequests";
 import { CreateQuoteParams, GenerateAudioParams } from "@/lib/types/quote";
 import { GetToken } from "@/lib/types";
+import { QUERY_KEYS } from "./queryKeys";
 
 export const useRegisterInDB = () => {
   const queryClient = useQueryClient();
@@ -14,38 +20,43 @@ export const useRegisterInDB = () => {
   });
 };
 
-export const useGenerateAudio = (getToken:GetToken) => {
+export const useGenerateAudio = (getToken: GetToken) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (generateAudioParams: GenerateAudioParams) =>
-      generateAudio(generateAudioParams,getToken),
-    onSuccess: (data ) => {},
+      generateAudio(generateAudioParams, getToken),
+    onSuccess: (data) => {},
   });
 };
 
-export const useGenerateImage = (getToken:GetToken) => {
+export const useGenerateImage = (getToken: GetToken) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({prompt}:{prompt:string}) =>
-      generateImage({prompt},getToken),
-    onSuccess: (data ) => {},
+    mutationFn: ({ prompt }: { prompt: string }) =>
+      generateImage({ prompt }, getToken),
+    onSuccess: (data) => {},
   });
 };
 
-export const useCreateQuote = (getToken:GetToken) => {
+export const useCreateQuote = (getToken: GetToken) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (createQuoteParams:CreateQuoteParams) =>
-      createQuote(createQuoteParams,getToken),
-    onSuccess: (data ) => {},
+    mutationFn: (createQuoteParams: CreateQuoteParams) =>
+      createQuote(createQuoteParams, getToken),
+    onSuccess: (data) => {},
   });
 };
-export const useDeleteQuote = (getToken:GetToken) => {
+export const useDeleteQuote = (getToken: GetToken) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({id}:{id:number}) =>
-      deleteQuote(id,getToken),
-    onSuccess: (data ) => {},
+    mutationFn: ({ id }: { id: number }) => deleteQuote(id, getToken),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_QUOTES] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_AUTHOR] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_QUOTES_BY_VOICE] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_QUOTE_BY_ID] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_TOP_AUTHORS] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_TRENDING_QUOTES] });
+    },
   });
 };
-

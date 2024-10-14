@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -43,16 +44,25 @@ export class QuoteController {
   }
   @Get('quotes-by-voice')
   async getQuotesByVoice(@Query() query: GetQuoteByVoiceDTO) {
-    return this.quoteService.getQuotesByVoice(query.voice);
+    if (
+      query.voice == 'Brian' ||
+      query.voice == 'Bill' ||
+      query.voice == 'George' ||
+      query.voice == 'Lilly'
+    )
+      return this.quoteService.getQuotesByVoice(query.voice);
+    else {
+      throw new BadRequestException('Invalid voice type. Must be one of: Brian, Bill, George, or Lilly.');
+
+    }
   }
   @Get('quotes/:id')
   async getQuoteById(@Param('id', ParseIntPipe) id: number) {
     return this.quoteService.getQuoteById(id);
   }
-  @Get("quotes")
-  async getQuotes(@Query() query:GetQuotesParamsDto){
-    return this.quoteService.getQuotes(query.search)
-    
+  @Get('quotes')
+  async getQuotes(@Query() query: GetQuotesParamsDto) {
+    return this.quoteService.getQuotes(query.search);
   }
   @Delete('quote-delete/:id')
   async deleteQuote(

@@ -1,4 +1,4 @@
-import { IsEnum } from "class-validator";
+import { IsEnum, IsString } from "class-validator";
 
 enum VoiceOptions {
   BRIAN = 'Brian',
@@ -9,6 +9,6 @@ enum VoiceOptions {
 
 
 export class GetQuoteByVoiceDTO{
-@IsEnum(VoiceOptions,{message:'Voice muste be either "Brian" or "Bill" or "George" or "Lilly"'})
-voice:VoiceOptions
+@IsString()
+voice:string
 }
