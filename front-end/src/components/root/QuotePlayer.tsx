@@ -7,6 +7,7 @@ import { formatTime } from "@/lib/formatTime";
 import { cn } from "@/lib/utils";
 import { UseAudio } from "@/lib/store/store";
 import { Progress } from "../ui/progress";
+import { X } from "lucide-react";
 
 const QuotePlayer = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -14,7 +15,7 @@ const QuotePlayer = () => {
   const [duration, setDuration] = useState(0);
   const [isMuted, setIsMuted] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
-  const { audio } = UseAudio();
+  const { audio,setAudio } = UseAudio();
 
   const togglePlayPause = () => {
     if (audioRef.current?.paused) {
@@ -110,7 +111,8 @@ const QuotePlayer = () => {
       {/* change the color for indicator inside the Progress component in ui folder */}
       <Progress
         value={(currentTime / duration) * 100}
-        className="w-full"
+        className="w-full h-1 text-orange-1"
+        color="orange"
         max={duration}
       />
       <section className="glassmorphism-black flex h-[112px] w-full items-center justify-between px-4 max-md:justify-center max-md:gap-5 md:px-12">
@@ -187,6 +189,9 @@ const QuotePlayer = () => {
               onClick={toggleMute}
               className="cursor-pointer"
             />
+          </div>
+          <div onClick={()=>setAudio(undefined)} className="absolute right-3 cursor-pointer">
+            <X className="text-white-1 opacity-60"/>
           </div>
         </div>
       </section>

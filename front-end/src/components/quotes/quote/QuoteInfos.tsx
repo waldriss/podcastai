@@ -61,7 +61,7 @@ const QuoteInfos = ({
       </div>
       
     <section className="mt-8 flex flex-col gap-5">
-      <h1 className="text-20 font-bold text-white-1">Similar Quotes</h1>
+      <h1 className="text-20 font-bold text-white-1">Quotes with similar voice</h1>
 
       {similarVoiceQuotes && similarVoiceQuotes.length > 0 ? (
         <div className="quote_grid">
