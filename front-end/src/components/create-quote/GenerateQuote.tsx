@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Label } from "../ui/label";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
-import { Loader } from "lucide-react";
+import { LoaderCircle } from "lucide-react";
 import { useGenerateAudio } from "@/lib/api/react-query/mutations";
 import { useAuth } from "@clerk/nextjs";
 import { useToast } from "@/hooks/use-toast";
@@ -51,7 +51,7 @@ const GenerateQuote = ({voicePrompt,audio,setAudio,setAudioDuration,setVoiceProm
           placeholder="Provide text to generate audio"
           rows={5}
           value={voicePrompt}
-          onChange={(e) => setVoicePrompt(e.target.value)}
+          onChange={(e) => {if(audio) setAudio(""); setVoicePrompt(e.target.value)}}
         />
       </div>
       <div className="mt-5 w-full max-w-[200px]">
@@ -63,7 +63,7 @@ const GenerateQuote = ({voicePrompt,audio,setAudio,setAudioDuration,setVoiceProm
           {isGenerating ? (
             <>
               Generating
-              <Loader size={20} className="animate-spin ml-2" />
+              <LoaderCircle size={20} className="animate-spin ml-2" />
             </>
           ) : (
             "Generate"

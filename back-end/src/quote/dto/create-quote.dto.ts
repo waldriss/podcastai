@@ -11,7 +11,6 @@ export class CreateQuoteParamsDto{
     @IsNotEmpty()
     @IsString()
     quoteDescription:string;
-    @IsNotEmpty()
     @IsString()
     imagePrompt:string;
     @IsNotEmpty()

@@ -14,7 +14,7 @@ import {
 import { Input } from "../ui/input";
 import { z } from "zod";
 import { Button } from "../ui/button";
-import { Loader } from "lucide-react";
+import { LoaderCircle } from "lucide-react";
 import Link from "next/link";
 import { useSignIn } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
@@ -131,7 +131,7 @@ const SigninForm = () => {
               />
             </div>
             <Button className="text-white-1 bg-orange-1" disabled={isLoading}>
-              {isLoading && <Loader className="mr-2 h-4 w-4 animate-spin" />}
+              {isLoading && <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />}
               Sign In
             </Button>
           </div>

@@ -3,7 +3,7 @@ import React, { useRef, useState } from "react";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 import { Textarea } from "../ui/textarea";
-import { Loader } from "lucide-react";
+import {  LoaderCircle } from "lucide-react";
 import { Input } from "../ui/input";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
@@ -82,7 +82,7 @@ const GenerateThumbnail = ({
         <Button
           type="button"
           variant="plain"
-          onClick={() => setIsAiThumbnail(true)}
+          onClick={() => {setIsAiThumbnail(true); setImage("");}}
           className={cn("", {
             "bg-black-6": isAiThumbnail,
           })}
@@ -92,7 +92,7 @@ const GenerateThumbnail = ({
         <Button
           type="button"
           variant="plain"
-          onClick={() => setIsAiThumbnail(false)}
+          onClick={() => {setIsAiThumbnail(false); setImage("");}}
           className={cn("", {
             "bg-black-6": !isAiThumbnail,
           })}
@@ -123,7 +123,7 @@ const GenerateThumbnail = ({
               {isImageLoading ? (
                 <>
                   Generating
-                  <Loader size={20} className="animate-spin ml-2" />
+                  <LoaderCircle size={20} className="animate-spin ml-2" />
                 </>
               ) : (
                 "Generate"
@@ -149,7 +149,7 @@ const GenerateThumbnail = ({
           ) : (
             <div className="text-16 flex-center font-medium text-white-1">
               Uploading
-              <Loader size={20} className="animate-spin ml-2" />
+              <LoaderCircle size={20} className="animate-spin ml-2" />
             </div>
           )}
           <div className="flex flex-col items-center gap-1">

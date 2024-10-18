@@ -26,7 +26,7 @@ import {
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
-import { Loader } from "lucide-react";
+import { Loader, LoaderCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React from "react";
 import GenerateThumbnail from "@/components/create-quote/GenerateThumbnail";
@@ -72,7 +72,6 @@ const CreateQuote = () => {
         !imageUrl ||
         !voiceType ||
         audioDuration == 0 ||
-        imagePrompt == "" ||
         voicePrompt == ""
       ) {
         toast({
@@ -141,7 +140,7 @@ const CreateQuote = () => {
                 Select AI Voice
               </Label>
 
-              <Select onValueChange={(value: Voice) => setVoiceType(value)}>
+              <Select onValueChange={(value: Voice) => {if(audioUrl) setAudioUrl(""); setVoiceType(value)}}>
                 <SelectTrigger
                   className={cn(
                     "text-16 w-full border-none bg-black-1 text-gray-1 focus-visible:ring-offset-orange-1"
@@ -219,7 +218,7 @@ const CreateQuote = () => {
                 {isSubmitting ? (
                   <>
                     Submitting
-                    <Loader size={20} className="animate-spin ml-2" />
+                    <LoaderCircle size={20} className="animate-spin ml-2" />
                   </>
                 ) : (
                   "Submit & Publish Quote"

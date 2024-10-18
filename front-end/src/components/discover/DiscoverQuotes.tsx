@@ -6,22 +6,23 @@ import QuoteCard from '../root/QuoteCard'
 import { useGetQuotes } from '@/lib/api/react-query/queries'
 import { useAuth } from '@clerk/nextjs'
 import EmptyState from '../quotes/quote/EmptyState'
-import Loader from '../global/Loader'
+import { LoaderCircle } from 'lucide-react'
+
 
 const DiscoverQuotes = ({initialDiscoverQuotes}:{initialDiscoverQuotes?:DiscoverQuote[]}) => {
 const [search,setSearch]=useState("")
 const {getToken}=useAuth()
-const {data:discoverQuotes}=useGetQuotes(initialDiscoverQuotes,getToken,search)
+const {data:discoverQuotes,isFetching}=useGetQuotes(initialDiscoverQuotes,getToken,search)
 
  return (
     <div className="flex flex-col gap-9">
       <SearchBar search={search} setSearch={setSearch} />
       <div className="flex flex-col gap-9">
         <h1 className="text-20 font-bold text-white-1">
-          {!search ? 'Discover Trending Quotes' : 'Search results for '}
-          {search && <span className="text-white-2">{search}</span>}
+        Discover Trending Quotes
+     
         </h1>
-        {discoverQuotes ? (
+        {discoverQuotes&&!isFetching? (
           <>
             {discoverQuotes.length > 0 ? (
               <div className="quote_grid">
@@ -37,7 +38,11 @@ const {data:discoverQuotes}=useGetQuotes(initialDiscoverQuotes,getToken,search)
             </div>
             ) : <EmptyState title="No results found" />}
           </>
-        ) : <Loader />}
+        ) :
+        <div className='flex justify-center items-center pt-20'>
+           <LoaderCircle className="animate-spin text-orange-1 text-center" size={30}  />
+        </div> 
+       }
       </div>
     </div>
   )
